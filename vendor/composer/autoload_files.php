@@ -8,5 +8,4 @@ $baseDir = dirname($vendorDir);
 return array(
     'b80bd822ea8d2bd4247dfcbecd2a2c2a' => $baseDir . '/source/Boot/Config.php',
     '6b1514003b2d887d4737863b7106330c' => $baseDir . '/source/Boot/Helpers.php',
-    '42c8555fc0abb1fa53ec40a15539b18e' => $baseDir . '/source/Boot/Minify.php',
 );
