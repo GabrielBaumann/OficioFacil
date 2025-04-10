@@ -1,0 +1,39 @@
+{
+    "name": "cerberus/office",
+    "version": "1.0.0",
+    "description": "Sistema para SEMDES",
+    "minimum-stability": "stable",
+    "authors": [
+      {
+        "name": "Lucas S. Santos",
+        "email": "trabalhovba@gmail.com",
+        "homepage": "https://www.cerberus.com.br",
+        "role": "Developer"
+      },
+      {
+        "name": "Gabriel Baumann",
+        "email": "noreply@github.com",
+        "homepage": "https://www.cerberus.com.br",
+        "role": "UI/UX Designer"
+      }
+    ],
+    "config": {
+      "vendor-dir": "vendor"
+    },
+    "autoload": {
+      "psr-4": {
+        "Source\\": "source/"
+      },
+      "files": [
+        "source/Boot/Config.php",
+        "source/Boot/Helpers.php",
+        "source/Boot/Minify.php"
+      ]
+    },
+    "require": {
+      "php": "^8.0",
+      "ext-pdo": "*",
+      "league/plates": "^3.5",
+      "coffeecode/router": "*"
+    }
+  }
