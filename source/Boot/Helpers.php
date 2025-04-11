@@ -62,3 +62,46 @@ function flash() : ?string
     }
     return null;    
 }
+
+function formatoNumero($numero) {
+    return sprintf('%04d', $numero);
+}
+
+function tempoDecorrido (string $dataHora): string
+{
+    $data = new DateTime($dataHora);
+    $agora = new DateTime();
+    $diferenca = $data->diff($agora);
+
+    $partes = [];
+
+    if ($diferenca->days > 0) {
+        $dias = $diferenca->days;
+        $partes[] = $dias === 1 ? "1 dia" : "{$dias} dias";
+    }
+
+    if ($diferenca->h > 0) {
+        $horas = $diferenca->h;
+        $partes[] = $horas === 1 ? "1 hora" :"{$horas} horas";
+    }
+
+    if ($diferenca->i > 0) {
+        $minutos = $diferenca->i;
+        $partes[] = $minutos === 1 ? "1 minuto" : "{$minutos} minutos";
+    }
+
+    if (empty($partes)) {
+        return "agora mesmo";
+    }
+
+    return "há " . implode(" e ", array_filter([
+        implode(", ", array_slice($partes, 0, -1)),
+        end($partes)
+    ]));
+
+}
+
+function formatoData($dataAtual){
+    $data = new DateTime($dataAtual);
+    return $data->format("d/m/Y H:i:s");
+}

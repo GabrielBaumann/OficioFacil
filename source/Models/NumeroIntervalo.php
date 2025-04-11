@@ -2,17 +2,18 @@
 
 namespace Source\Models;
 
+use ReturnTypeWillChange;
 use Source\Core\Model;
 use Source\Models\NumeroOficio;
 
 class NumeroIntervalo extends Model
 {
-    private $indRetorno;
+    private $idRetorno;
 
     public function __construct()
     {
         parent::__construct(
-            "numero_oficio_intervalo",["id_usuario"],["inicio","fim"]
+            "numero_intervalo",["id_numero_oficio"],["inicio","fim"]
         );    
     }
 
@@ -20,7 +21,7 @@ class NumeroIntervalo extends Model
         int $idUsuario,
         int $numeroInicial,
         int $numeroFinal,
-        string $observacao = null
+        ?string $observacao = null 
     ) : NumeroIntervalo {
             $this->id_usuario = $idUsuario;
             $this->inicio = $numeroInicial;
@@ -31,24 +32,20 @@ class NumeroIntervalo extends Model
 
     public function save() : bool
     {   
-        $this->indRetorno = $this->create($this->safe());
-        return true;    
+       $this->idRetorno = $this->create($this->safe());
+       return true;    
     }
 
     public function getIdRetorno() : ?int
     {  
-       return $this->indRetorno;  
+       return $this->idRetorno;  
     }
 
     public function verificarNumero(int $numeroInicio, int $numeroFim) : bool
     {
 
-        if ($numeroInicio != (int)$numeroInicio || $numeroFim != (int)$numeroFim){
-            $this->message("Número não compatíveis!")->render();
-            return false;
-        }
 
-        if ($numeroFim < 0 || $numeroFim < 0) {
+        if ($numeroInicio < 0 || $numeroFim < 0) {
             $this->message->warning("Os número não podem ser negativos!")->render();
             return false;
         }
@@ -67,19 +64,34 @@ class NumeroIntervalo extends Model
     public function verificarNumeroBanco(int $numeroInicio, int $numeroFim) : bool
     {   
         $anoAtual = date('Y');
+
+        $tabelaOriginal = static::$entity;
+
         $numeroOficio = (new NumeroOficio());
 
         for ($i = $numeroInicio; $i <= $numeroFim; $i++) {
             $numeroOficio->find("numero_oficio = :numero AND ano_oficio = :anoof","numero={$i}&anoof={$anoAtual}");
             $dados = $numeroOficio->fetch();
-            if($dados){
+
+            if($dados){ 
                 $this->message->warning("Esse intervalo, ou parte dos números desse intervalo já foram cadastrados!")->render();
+                
+                static::$entity = $tabelaOriginal;
                 return true;
-            }else {
-                return false;
             }
         }
+
+        static::$entity = $tabelaOriginal;
         return false; 
+    }
+
+    public function getHistorico(int $idUsuario) : ?NumeroIntervalo
+    {   
+        if (!$idUsuario) {
+            return null;
+        }
+        $this->find("id_usuario = :id","id={$idUsuario}")->order("id_numero_intervalo DESC");
+        return ($this->fetch());
     }
 
 }

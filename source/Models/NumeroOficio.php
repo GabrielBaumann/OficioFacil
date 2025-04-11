@@ -30,13 +30,17 @@ class NumeroOficio extends Model
 
     public function gerarNumero(int $numeroInicio, int $numeroFim, int $idUsuario, int $numeroIntervalo) : bool
     {  
+        $loop = 0;
+
         for ($i = $numeroInicio; $i <= $numeroFim; $i++) {
             $this->cadastrarNumero($idUsuario, $i, date('Y'), $numeroIntervalo);
             $this->save();
+            $loop ++;
         }
-        $numeroFormat = sprintf('%04d', $i);
 
-        $this->message->success("{$numeroFormat}Números cadastrados com sucesso!")->render();
+        $numeroFormat = sprintf('%04d', $loop);
+
+        $this->message->success("{$numeroFormat} Números cadastrados com sucesso!")->render();
         return true;
     }
 

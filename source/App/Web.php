@@ -55,20 +55,17 @@ class Web extends Controller
 
     public function oficio(?array $data) : void
     {
-        
+        $intervalo = (new NumeroIntervalo());
         if(!empty($data['csrf'])){
 
-            $intervalo = (new NumeroIntervalo());
-            $verificar = $intervalo->verificarNumero($data['min-number'], $data['max-number']);
+            
+            $verificarNumero = $intervalo->verificarNumero($data['min-number'], $data['max-number']);
 
-            if ($verificar) {
-                var_dump($verificar);
+            if(!$verificarNumero){
+                $json['message'] = $intervalo->message()->render();
+                echo json_encode($json);
                 return;
             }
-
-            // $json['message'] = $intervalo->message()->render();
-            // echo json_encode($json);
-            // return;
 
             $intervalo->cadastrarIntervalo(
                 1,
@@ -79,18 +76,25 @@ class Web extends Controller
 
             $intervalo->save();
 
-            // $numeroOficio = (new NumeroOficio());
-            // $numeroOficio->gerarNumero($data['min-number'], $data['max-number'], 1, $intervalo->getIdRetorno());
 
-            // $numeroOficio->save();
+            $numeroOficio = (new NumeroOficio());
+            $numeroOficio->gerarNumero($data['min-number'], $data['max-number'], 1, $intervalo->getIdRetorno());
 
-            // $json['message'] = $numeroOficio->message()->render();
-            // echo json_encode($json);
-            // return;
-            }
+            $json['message'] = $numeroOficio->message()->render();
+            echo json_encode($json);
+            return;
+        }
+        
+        $intervaloHistorico = (new NumeroIntervalo());
+
+        $ultimoIntervalo = $intervalo->find()->order("id_numero_intervalo DESC")->fetch();
+        $intervaloHistorico->getHistorico(1);
+        
 
         echo $this->view->renderizar("formulario_oficio", [
-            "title" => "OfícioFácil"
+            "title" => "OfícioFácil",
+            "intervalo" => $ultimoIntervalo,
+            "historico" => $intervaloHistorico->fetch(true)
         ]);
     }
 
