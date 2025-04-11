@@ -24,12 +24,14 @@ class Web extends Controller
         if (!empty($data['csrf'])) {
            if(!csrf_verify($data)) {
                 $json['message'] = $this->message->error("Erro ao enviar, favor use o formulário!")->render();
+                $json['erro'] = "error";
                 echo json_encode($json);
                 return;
            }
            
            if(empty($data['usuario']) || empty($data['senha'])) {
                 $json['message'] = $this->message->warning("Informe o usuario e senha para entrar.")->render();
+                $json['erro'] = "error";
                 echo json_encode($json);
                 return;
            }
@@ -37,6 +39,7 @@ class Web extends Controller
            $usuario = (new Usuario());
            if(!$usuario->autenticar($data['usuario'], $data['senha'])) {
                 $json['message'] = $usuario->message()->render();
+                $json['erro'] = "error";
                 echo json_encode($json);
                 return;
             } else {
@@ -63,6 +66,7 @@ class Web extends Controller
 
             if(!$verificarNumero){
                 $json['message'] = $intervalo->message()->render();
+                $json['erro'] = "error";
                 echo json_encode($json);
                 return;
             }

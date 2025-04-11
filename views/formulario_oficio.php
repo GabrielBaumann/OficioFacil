@@ -105,7 +105,7 @@
                                     </svg>
                                 </div>
                                 <div>
-                                    <p class="text-sm font-medium text-gray-900"><?= $elemento->inicio; ?> - <?= $elemento->fim; ?></p>
+                                    <p class="text-sm font-medium text-gray-900"><?= formatoNumero($elemento->inicio); ?> - <?= formatoNumero($elemento->fim); ?></p>
                                     <p class="text-xs text-gray-500"><?= tempoDecorrido($elemento->data_cadastro) ?></p>
                                 </div>
                             </div>
