@@ -1,6 +1,9 @@
 <?php $this->layout('layout_login', ["title" => $title]) ?>
 
 <form action="<?= url("/"); ?>" method="post">
+    <div class="ajax_response absolute top-0 left-0 w-full z-50 rounded hidden"></div>
+    <?= csrf_input(); ?>
+
     <div class="flex flex-col md:flex-row w-full h-auto md:h-[600px] max-w-4xl bg-white rounded-tl-[100px] rounded-tr-[20px] rounded-br-[100px] rounded-bl-[20px] shadow-lg overflow-hidden m-5">
         <div class="hidden md:flex md:w-1/2 bg-gray-900 text-white p-10 flex flex-col justify-center">
             <h2 class="text-2xl font-bold">Bem vindo ao OficioFácil</h2>

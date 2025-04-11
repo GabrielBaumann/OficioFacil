@@ -13,7 +13,7 @@
      </style>
  </head>
  <body class="flex items-center justify-center min-h-screen bg-gray-100">
-    <div class="ajax_response absolute top-0 left-0 w-full z-50 rounded hidden"></div>
+    
     <main>
         <?= $this->section("content"); ?>
     </main>
