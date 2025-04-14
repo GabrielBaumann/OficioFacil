@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Controle Numérico</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <style type="text/tailwindcss">
+        @layer utilities {
+            @page {
+                size: A4;
+                margin: 1cm;
+            }
+            .cell {
+                width: 1.5cm;
+                height: 1.5cm;
+                min-width: 1.5cm;
+                min-height: 1.5cm;
+            }
+        }
+    </style>
+</head>
+<body class="bg-white print:bg-white">
+    <div class="container mx-auto px-4 py-8">
+        <header class="mb-8 text-center">
+            <h1 class="text-2xl font-bold text-gray-800 mb-1">CONTROLE DE OFÍCIOS</h1>
+        </header>
+        <div class="border border-gray-300 p-2 print:p-1">
+            <div class="flex flex-wrap gap-0 border-collapse">
+                <div class="cell border border-gray-300 flex items-center justify-center text-lg font-bold print:border-gray-400">1</div>
+            </div>
+        </div>
+    </div>
+</body>
+</html>
