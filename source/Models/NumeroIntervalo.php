@@ -2,9 +2,9 @@
 
 namespace Source\Models;
 
-use ReturnTypeWillChange;
 use Source\Core\Model;
 use Source\Models\NumeroOficio;
+use Source\Models\Unidade;
 
 class NumeroIntervalo extends Model
 {
@@ -13,7 +13,7 @@ class NumeroIntervalo extends Model
     public function __construct()
     {
         parent::__construct(
-            "numero_intervalo",["id_numero_oficio"],["inicio","fim"]
+            "numero_oficio_intervalo",["id_numero_oficio"],["inicio","fim"]
         );    
     }
 
@@ -23,11 +23,11 @@ class NumeroIntervalo extends Model
         int $numeroFinal,
         ?string $observacao = null 
     ) : NumeroIntervalo {
-            $this->id_usuario = $idUsuario;
-            $this->inicio = $numeroInicial;
-            $this->fim = $numeroFinal;
-            $this->observacao = $observacao;
-            return $this;
+        $this->id_usuario = $idUsuario;
+        $this->inicio = $numeroInicial;
+        $this->fim = $numeroFinal;
+        $this->observacao = $observacao;
+        return $this;
     }
 
     public function save() : bool
@@ -41,7 +41,7 @@ class NumeroIntervalo extends Model
        return $this->idRetorno;  
     }
 
-    public function verificarNumero(int $numeroInicio, int $numeroFim) : bool
+    public function verificarNumero(int $numeroInicio, int $numeroFim, int $idUnidade) : bool
     {
 
 
@@ -54,6 +54,19 @@ class NumeroIntervalo extends Model
             $this->message->warning("O número inicial não pode ser maior que o número final!")->render();
             return false;
         }
+
+        $tabelaOriginal = static::$entity;
+
+        $unidade = (new Unidade());
+
+        $limiteNumero = $unidade->idUnidade($idUnidade)->limite_numero;
+        if ($numeroFim - $numeroInicio > $limiteNumero) {
+            $this->message->warning("O limite de números gerados por vez não pode ultrapassar {$limiteNumero}!")->render();
+            return false;
+        }
+        
+        static::$entity = $tabelaOriginal;
+
         if ($this->verificarNumeroBanco($numeroInicio, $numeroFim)){
             return false;
         } else {

@@ -15,9 +15,13 @@ $route->namespace("Source\App");
 $route->get("/", "Web:login");
 $route->post("/", "Web:login");
 
-$route->get("/of", "Web:oficio");
-$route->post("/of", "Web:oficio");
+$route->get("/of", "App:oficio");
+$route->post("/of", "App:oficio");
+$route->get("/render/{local}", "App:atualizar");
 
+$route->get("/gerar", "App:gerarpdf");
+
+$route->get("/sair", "App:fechar");
 
 // ROUTER
 $route->dispatch();

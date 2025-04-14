@@ -33,6 +33,7 @@
       "php": "^8.0",
       "ext-pdo": "*",
       "league/plates": "^3.5",
-      "coffeecode/router": "*"
+      "coffeecode/router": "*",
+        "dompdf/dompdf": "^3.1"
     }
   }
