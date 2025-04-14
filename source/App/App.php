@@ -51,9 +51,11 @@ class App extends Controller
             $numeroOficio = (new NumeroOficio());
             $numeroOficio->gerarNumero($data['min-number'], $data['max-number'],  $usuario->id_usuario, $intervalo->getIdRetorno());
 
+            $json['id'] = $intervalo->getIdRetorno();
             $json['message'] = $numeroOficio->message()->render();
             echo json_encode($json);
             return;
+
         }
         
         $intervaloHistorico = (new NumeroIntervalo());
@@ -109,11 +111,18 @@ class App extends Controller
         }    
     }
 
-    public function gerarpdf() : void
-    {
+    public function gerarpdf(array $data) : void
+    {   
+
+        $id = $data['id'];
+        $intervalo = (new NumeroOficio())->find("id_numero_intervalo = :id", "id={$id}");
+        $numero = $intervalo->fetch(true);
+
         $gerarpdf = (new GerarPdf());
+
         $html = $this->view->renderizar("lista-impressao", [
-            "title" => "Lista de impressão do ofício"
+            "title" => "Impressão Ofício",
+            "numeros" => $numero
         ]);
         
         $gerarpdf->gerarPDF($html, 'listaOficio.pdf');

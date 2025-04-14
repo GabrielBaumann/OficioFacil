@@ -13,7 +13,7 @@ class NumeroIntervalo extends Model
     public function __construct()
     {
         parent::__construct(
-            "numero_oficio_intervalo",["id_numero_oficio"],["inicio","fim"]
+            "numero_intervalo",["id_numero_oficio"],["inicio","fim"]
         );    
     }
 

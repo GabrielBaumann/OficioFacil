@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <title>Controle Numérico</title>
+    <style>
+        @page {
+            size: A4;
+            margin: 1cm;
+        }
+        body {
+            font-family: sans-serif;
+            background: white;
+        }
+        .container {
+            width: 100%;
+            padding: 20px;
+        }
+        .header {
+            text-align: center;
+            margin-bottom: 30px;
+        }
+        .title {
+            font-size: 20px;
+            font-weight: bold;
+            color: #333;
+        }
+        .grid {
+            display: flex;
+            flex-wrap: wrap;
+        }
+        .cell {
+            width: 1.5cm;
+            height: 1.5cm;
+            border: 1px solid #ccc;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: bold;
+            font-size: 14px;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <header class="header">
+            <h1 class="title">CONTROLE DE OFÍCIOS</h1>
+        </header>
+        <div class="grid">
+            <div class="cell">0001</div>
+            <div class="cell">0002</div>
+            <div class="cell">0002</div>
+        </div>
+    </div>
+</body>
+</html>

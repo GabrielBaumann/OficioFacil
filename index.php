@@ -19,7 +19,7 @@ $route->get("/of", "App:oficio");
 $route->post("/of", "App:oficio");
 $route->get("/render/{local}", "App:atualizar");
 
-$route->get("/gerar", "App:gerarpdf");
+$route->get("/gerar/{id}", "App:gerarpdf");
 
 $route->get("/sair", "App:fechar");
 
