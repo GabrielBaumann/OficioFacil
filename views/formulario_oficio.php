@@ -72,7 +72,7 @@
         </div>
         
         <!-- Ùltimo intervalo gerado -->
-        <div id="intevaloDados">
+        <div id="intervaloDados">
             <?php $this->insert('intervalo', ['intervalo' => $intervalo])?>
         </div>
     </main>
