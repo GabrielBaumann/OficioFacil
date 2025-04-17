@@ -28,8 +28,11 @@ class App extends Controller
         $usuario = Autenticar::usuarioLogado();
         $intervalo = (new NumeroIntervalo());
         if(!empty($data['csrf'])){
-            
-            $verificarNumero = $intervalo->verificarNumero($data['min-number'], $data['max-number'], $usuario->id_unidade);
+
+            $ultimoIntervalo = $intervalo->find()->order("id_numero_intervalo DESC")->fetch();
+            $numeroIntervalor = ($ultimoIntervalo->fim ?? 0) + 1;
+
+            $verificarNumero = $intervalo->verificarNumero($numeroIntervalor, $data['max-number'], $usuario->id_unidade);
 
             if(!$verificarNumero){
                 $json['message'] = $intervalo->message()->render();
@@ -40,7 +43,7 @@ class App extends Controller
 
             $intervalo->cadastrarIntervalo(
                 $usuario->id_usuario,
-                $data['min-number'],
+                $numeroIntervalor,
                 $data['max-number'],
                 $data['observacao']
             );
@@ -49,7 +52,7 @@ class App extends Controller
 
 
             $numeroOficio = (new NumeroOficio());
-            $numeroOficio->gerarNumero($data['min-number'], $data['max-number'],  $usuario->id_usuario, $intervalo->getIdRetorno());
+            $numeroOficio->gerarNumero($numeroIntervalor, $data['max-number'],  $usuario->id_usuario, $intervalo->getIdRetorno());
 
             $json['id'] = $intervalo->getIdRetorno();
             $json['message'] = $numeroOficio->message()->render();
@@ -90,15 +93,24 @@ class App extends Controller
     {   
         $local = $data["local"] ?? null;
         
-        if ($local === "intervalo") {
+        // if ($local === "intervalo") {
+        //     $intervalo = (new NumeroIntervalo());
+        //     $ultimoIntervalo = $intervalo->find()->order("id_numero_intervalo DESC")->fetch();
+            
+        //     echo $this->view->renderizar("intervalo", [
+        //         "intervalo" => $ultimoIntervalo
+        //     ]);
+        // }
+        
+        if ($local === "intervaloMais") {
             $intervalo = (new NumeroIntervalo());
             $ultimoIntervalo = $intervalo->find()->order("id_numero_intervalo DESC")->fetch();
-            
-            echo $this->view->renderizar("intervalo", [
+
+            echo $this->view->renderizar("intervalo_mais", [
                 "intervalo" => $ultimoIntervalo
             ]);
         }
-            
+
         if ($local === "historico") {
             $usuario = Autenticar::usuarioLogado();
             $intervaloHistorico = (new NumeroIntervalo());

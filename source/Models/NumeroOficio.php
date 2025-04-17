@@ -38,9 +38,9 @@ class NumeroOficio extends Model
             $loop ++;
         }
 
-        $numeroFormat = sprintf('%04d', $loop);
+        // $numeroFormat = sprintf('%04d', $loop);
 
-        $this->message->success("{$numeroFormat} Números cadastrados com sucesso!")->render();
+        $this->message->success("{$loop} Números cadastrados com sucesso!")->render();
         return true;
     }
 

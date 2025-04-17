@@ -13,18 +13,8 @@
                 <h2 class="text-xl font-bold text-center text-gray-900 mb-6">Selecione um intervalo</h2>
                     
                 <div class="flex flex-col md:flex-row md:space-x-4 space-y-4 md:space-y-0">
-                    <div class="md:w-1/2">
-                        <label class="block text-sm font-medium text-gray-700 mb-2">De</label>
-                        <input
-                            type="number"
-                            id="min-number"
-                            name="min-number"
-                            disabled
-                            class="appearance-none w-full px-4 py-3 text-base rounded-full bg-gray-100 border border-gray-400 focus:border-blue-500 focus:ring-2 focus:ring-blue-200 outline-none transition cursor-not-allowed"
-                            value="001"
-                            min="0"
-                            required
-                        >
+                    <div class="md:w-1/2" id="intervaloMais">
+                        <?php $this->insert('intervalo_mais', ['intervalo' => $intervalo]) ?>
                     </div>
             
                     <div class="md:w-1/2">
@@ -67,8 +57,8 @@
             <h2 class="text-xl font-bold text-center text-gray-900 mb-6">Histórico</h2>
 
             <!-- Container principal do histórico -->
-            <div class="bg-white rounded-xl shadow-sm border border-gray-200">
-                <?php $this->insert('historico', ['historico' => $historico, 'historico' => $historico, 'totHistorico' => $totHistorico]) ?>
+            <div id="historicoDados" class="bg-white rounded-xl shadow-sm border border-gray-200">
+                <?php $this->insert('historico', ['historico' => $historico, 'totHistorico' => $totHistorico]) ?>
             </div>
         </div>
     </div>

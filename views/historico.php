@@ -17,7 +17,9 @@
                                     <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4 mr-1" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                                         <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z" />
                                     </svg>
-                                    <span><?= tempoDecorrido($elemento->data_cadastro) ?></span>
+                                    <span class="tempo-decorrido" data-dt="<?= $elemento->data_cadastro ?>">
+                                        <?= tempoDecorrido($elemento->data_cadastro) ?>
+                                    </span>
                                 </div>
                             </div>
                             <p class="mt-2 text-base text-gray-600 truncate"><?= $elemento->observacao?></p>

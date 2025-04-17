@@ -15,7 +15,7 @@
             <h2 class="text-2xl font-semibold text-gray-700">Faça seu login</h2>
             <div class="w-12 border-b-2 border-gray-900 my-3"></div>
             <input name="usuario" type="text" placeholder="Seu usuário..." class="w-full p-2 border border-gray-300 rounded mt-2 focus:outline-none focus:ring-2 focus:ring-blue-600">
-            <input name="senha" type="text" placeholder="Sua senha..." class="w-full p-2 border border-gray-300 rounded mt-4 focus:outline-none focus:ring-2 focus:ring-blue-600">
+            <input name="senha" type="password" placeholder="Sua senha..." class="w-full p-2 border border-gray-300 rounded mt-4 focus:outline-none focus:ring-2 focus:ring-blue-600">
             <button type="submit" class="w-full bg-gray-900 text-white font-semibold py-2 rounded mt-4 hover:bg-gray-800 transition">ENTRAR</button>
         </div>
     </div>
