@@ -42,7 +42,7 @@ class Autenticar extends Model
             $this->message->warning("Senha inválida!")->render();
             return false;
         };
-        $this->message->warning("O usuário não cadastrado!")->render();
+        $this->message->warning("Usuário não cadastrado!")->render();
         return false;    
     }
     
