@@ -6,6 +6,8 @@ $vendorDir = dirname(__DIR__);
 $baseDir = dirname($vendorDir);
 
 return array(
+    '6124b4c8570aa390c21fafd04a26c69f' => $vendorDir . '/myclabs/deep-copy/src/DeepCopy/deep_copy.php',
+    'db356362850385d08a5381de2638b5fd' => $vendorDir . '/mpdf/mpdf/src/functions.php',
     'b80bd822ea8d2bd4247dfcbecd2a2c2a' => $baseDir . '/source/Boot/Config.php',
     '6b1514003b2d887d4737863b7106330c' => $baseDir . '/source/Boot/Helpers.php',
 );

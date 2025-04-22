@@ -1,25 +1,10 @@
-<?php 
-function imgBase64($arquivo, $tipo = 'png') {
-    $caminho = __DIR__ . "/../../views/assets/" . $arquivo;
-
-if (file_exists($caminho)) {
-    return "data:image/{$tipo};base64," . base64_encode(file_get_contents($caminho));
-}
-
-return '';
-
-$brasao = imgBase64("brasao.jpg", "jpeg");
-}
-?>
-
-
-
 <!DOCTYPE html>
 <html lang="pt-BR">
 <head>
-    <meta charset="UTF-8">
-    <title><?= $this->e($title ?? 'Impressão') ?></title>
-    <style>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Controle Numérico</title>
+  <style>
     @page {
       size: A4;
       margin: 1cm;
@@ -64,11 +49,11 @@ $brasao = imgBase64("brasao.jpg", "jpeg");
       margin: 0;
     }
 
-    /* .container {
+    .container {
       max-width: 1024px;
       margin: 0 auto;
       padding: 32px 16px;
-    } */
+    }
 
     .title {
       text-align: center;
@@ -90,6 +75,19 @@ $brasao = imgBase64("brasao.jpg", "jpeg");
     .flex-wrap {
       display: flex;
       flex-wrap: wrap;
+    }
+
+    .cell {
+      width: 1.5cm;
+      height: 1.5cm;
+      min-width: 1.5cm;
+      min-height: 1.5cm;
+      border: 1px solid #d1d5db;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 1.125rem; /* text-lg */
+      font-weight: bold;
     }
 
     footer {
@@ -119,55 +117,36 @@ $brasao = imgBase64("brasao.jpg", "jpeg");
       line-height: 1.2;
       margin: 0;
     }
-
-        .container {
-            text-align: center;
-        }
-
-        .title {
-            font-size: 20pt;
-            font-weight: bold;
-            margin: 20px 0;
-        }
-
-        .tabela {
-            margin: 0 auto;
-            border-collapse: collapse;
-        }
-
-        .cell {
-            width: 1.5cm;
-            height: 1.5cm;
-            border: 1px solid #999;
-            text-align: center;
-            vertical-align: middle;
-            font-weight: bold;
-            font-size: 12pt;
-        }
-    </style>
+  </style>
 </head>
 <body>
-<header>
-<img src="<?= $brasao ?>" alt="Logo Esquerda" />
-<!-- <img src="/views/assets/brasao.jpg" alt="Logo Esquerda" /> -->
-<div class="text-header">
-    <h1>ESTADO DO PARÁ</h1>
-    <h1>PREFEITURA MUNICIPAL DE CANAÃ DOS CARAJÁS</h1>
-    <h1>SECRETARIA MUNICIPAL DE DESENVOLVIMENTO SOCIAL</h1>
-</div>
-<img src="/views/assets/logo.png" alt="Logo Direita" />
-</header>
+  <header>
+    <img src="<?= themes("/views/assets/brasao.jpg") ?>" alt="Logo Esquerda" />
+    <div class="text-header">
+      <h1>ESTADO DO PARÁ</h1>
+      <h1>PREFEITURA MUNICIPAL DE CANAÃ DOS CARAJÁS</h1>
+      <h1>SECRETARIA MUNICIPAL DE DESENVOLVIMENTO SOCIAL</h1>
+    </div>
+    <img src=<?= themes("/views//assets/logo.png") ?> alt="Logo Direita" />
+  </header>
 
-    <?= $this->section('content') ?>
+  <div class="container">
+    <div class="title">
+      <h1>CONTROLE DE OFÍCIOS</h1>
+    </div>
 
-<footer>
-<div class="logos">
-    <img src="/views/assets/SEMDES.png" alt="Logo 1" />
-    <img src="/views/assets/logo.png" alt="Logo 2" />
-</div>
-<p>SECRETARIA DE DESENVOLVIMENTO SOCIAL - SEMDES</p>
-<p>Avenida Ipanema S/N, - Novo Horizonte II - CEP 68.356.193- Canaã dos Carajás/PA</p>
-<p>e-mail institucional: semdes@canaadoscarajas.pa.gov.br</p>
-</footer>
+    <?= $this->section("content"); ?>
+
+  </div>
+  
+  <footer>
+    <div class="logos">
+      <img src=<?= themes("/views/assets/SEMDES.png")?> alt="Logo 1" />
+      <img src=<?= themes("/views/assets/logo.png")?> alt="Logo 2" />
+    </div>
+    <p>SECRETARIA DE DESENVOLVIMENTO SOCIAL - SEMDES</p>
+    <p>Avenida Ipanema S/N, - Novo Horizonte II - CEP 68.356.193- Canaã dos Carajás/PA</p>
+    <p>e-mail institucional: semdes@canaadoscarajas.pa.gov.br</p>
+  </footer>
 </body>
 </html>

@@ -2,8 +2,10 @@
 
 namespace Source\Support;
 
-use mPDF;
-
+use Mpdf\Mpdf;
+use Mpdf\Output\Destination;
+use Mpdf\Config\ConfigVariables;
+use Mpdf\Config\FontVariables;
 
 class GerarPdf
 {   
@@ -17,5 +19,27 @@ class GerarPdf
             'orientation' => 'P',
             'default_font' => 'Arial'
         ];
+
+        $settings = array_merge($defaultConfig, $config);
+
+        $this->pdf = new Mpdf($settings);
+
     }
+
+    public function carregarHtml(string $html): void
+    {   
+        $this->pdf->WriteHTML($html);
+    }
+
+    public function renderizar(string $nomeArquivo = 'oficioFacil.pdf', bool $download = false) : void
+    {
+        $destino = $download ? Destination::DOWNLOAD : Destination::INLINE;
+        $this->pdf->Output($nomeArquivo, $destino);
+    }
+
+    public function getInstancia() : Mpdf
+    {
+        return $this->pdf;    
+    }
+
 }
