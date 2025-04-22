@@ -1,8 +1,0 @@
-{
-    "poppins": {
-        "300": "C:\\xampp\\htdocs\\OficioFacil\\vendor\\dompdf\\dompdf\/lib\/fonts\/poppins_300_71a46324c5def983e80884621dcd061b",
-        "normal": "C:\\xampp\\htdocs\\OficioFacil\\vendor\\dompdf\\dompdf\/lib\/fonts\/poppins_normal_12f61e1aca2bd22472c17cf0465b304e",
-        "500": "C:\\xampp\\htdocs\\OficioFacil\\vendor\\dompdf\\dompdf\/lib\/fonts\/poppins_500_eaa67a2dcd54166f62e0cc3adc7e1b71",
-        "bold": "poppins_bold_dd0c9eff9089b312c7d5e9a1f45059a4"
-    }
-}

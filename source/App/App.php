@@ -1,6 +1,8 @@
 <?php
 
 namespace Source\App;
+
+use mPDF;
 use Source\Models\NumeroIntervalo;
 use Source\Models\NumeroOficio;
 
@@ -8,7 +10,6 @@ use Source\Core\Controller;
 use Source\Core\Session;
 use Source\Models\Autenticar;
 use Source\Models\Unidade;
-use Source\Support\GerarPdf;
 
 class App extends Controller
 {
@@ -130,13 +131,18 @@ class App extends Controller
         $intervalo = (new NumeroOficio())->find("id_numero_intervalo = :id", "id={$id}");
         $numero = $intervalo->fetch(true);
 
-        $gerarpdf = (new GerarPdf());
 
         $html = $this->view->renderizar("lista-impressao", [
             "title" => "Impressão Ofício",
             "numeros" => $numero
         ]);
         
-        $gerarpdf->gerarPDF($html, 'listaOficio.pdf');
+        $gerarpdf = (new mPDF([
+            'default_font' => 'Arial',
+            'format' => 'A4'
+        ]));
+
+        $gerarpdf->WriteHTML($html);
+        $gerarpdf->Output("oficioFacil.pdf");
     }
 }

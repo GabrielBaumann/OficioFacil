@@ -34,6 +34,6 @@
       "ext-pdo": "*",
       "league/plates": "^3.5",
       "coffeecode/router": "*",
-        "dompdf/dompdf": "^3.1"
+      "mpdf/mpdf": "^6.1"
     }
   }
