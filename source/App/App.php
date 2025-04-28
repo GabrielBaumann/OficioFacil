@@ -94,15 +94,6 @@ class App extends Controller
     {   
         $local = $data["local"] ?? null;
         
-        // if ($local === "intervalo") {
-        //     $intervalo = (new NumeroIntervalo());
-        //     $ultimoIntervalo = $intervalo->find()->order("id_numero_intervalo DESC")->fetch();
-            
-        //     echo $this->view->renderizar("intervalo", [
-        //         "intervalo" => $ultimoIntervalo
-        //     ]);
-        // }
-        
         if ($local === "intervaloMais") {
             $intervalo = (new NumeroIntervalo());
             $ultimoIntervalo = $intervalo->find()->order("id_numero_intervalo DESC")->fetch();
@@ -132,9 +123,8 @@ class App extends Controller
         $numero = $intervalo->fetch(true);
 
         echo $this->view->renderizar("lista-impressao", [
-            "title" => "Impressão Ofício",
+            "title" => "Impressão",
             "numeros" => $numero
         ]);
-
     }
 }

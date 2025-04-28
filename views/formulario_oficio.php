@@ -43,7 +43,7 @@
                     ></textarea>
                 </div>
                     
-                <button class="w-full md:w-[calc(100%-1rem)] md:mx-auto mt-6 bg-blue-600 hover:bg-blue-700 text-white font-medium py-3 px-6 rounded-full transition-all flex items-center justify-center space-x-2 text-base">
+                <button id="visualizar" class="w-full md:w-[calc(100%-1rem)] md:mx-auto mt-6 bg-blue-600 hover:bg-blue-700 text-white font-medium py-3 px-6 rounded-full transition-all flex items-center justify-center space-x-2 text-base">
                     <span>Confirmar Intervalo</span>
                     <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                         <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7" />

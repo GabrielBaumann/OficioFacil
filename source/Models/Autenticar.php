@@ -26,15 +26,17 @@ class Autenticar extends Model
     public function logar(string $usuario, string $senha) : bool
     {   
         $user = $this->find("usuario = :u", "u={$usuario}")->fetch();
-        
+        // $user->senha = passwd($senha);
+        // $user->save();
+
         if ($user){
             
             if($user->ativo === 0){
                 $this->message->error("Usuário sem acesso ao sistema! Entre em contato com o administrado!")->render();
                 return false;
             }
-            
-            if($user->senha === $senha){
+
+            if(passwd_verify($senha, $user->senha)){
                 (new Session())->set("usuario", $user->id_usuario);
                 $this->message->success("Login efetuado com sucesso. Seja bem vindo(a) {$user->usuario}")->flash();
                 return true;
@@ -45,5 +47,19 @@ class Autenticar extends Model
         $this->message->warning("Usuário não cadastrado!")->render();
         return false;    
     }
-    
+
+    public function save() : bool
+    {   
+
+        if (!empty($this->id_usuario)) {
+            $usuarioId = $this->id_usuario;
+
+            $this->update($this->safe(), "id_usuario = :id", "id={$usuarioId}");
+            return true;
+        }
+
+        $this->create($this->safe());
+        return true;    
+    }
+
 }

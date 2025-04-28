@@ -2,6 +2,8 @@
 
 // URL
 
+use League\Plates\Template\Func;
+
 function url(?string $path = null) : string
 {
     if (strpos($_SERVER['HTTP_HOST'], "localhost") !== false) {
@@ -120,3 +122,48 @@ function formatoData($dataAtual){
     return $data->format("d/m/Y H:i:s");
 }
 
+// PASSWORD
+
+function passwd_rehash(string $hash): bool
+{
+    return password_needs_rehash($hash, PASSWORD_DEFAULT, ["cost" => 10]);
+}
+
+function passwd(string $password): string
+{
+    if (!empty(password_get_info($password)['algo'])) {
+        return $password;
+    }
+
+    return password_hash($password, PASSWORD_DEFAULT, ["cost" => 10]);
+}
+
+function passwd_verify(string $password, string $hash): bool
+{
+    return password_verify($password, $hash);
+}
+
+// REQUEST
+
+function request_limit(string $key, int $limit = 5, int $seconds = 60):bool
+{
+
+    $session = new \Source\Core\Session();
+    if ($session->has($key) && $session->$key->time >= time() && $session->$key->requests < $limit) {
+        $session->set($key, [
+            "time" => time() + $seconds,
+            "requests" => $session->$key->requests + 1
+        ]);
+        return false;
+    }
+
+    if ($session->has($key) && $session->$key->time >= time() && $session->$key->requests >= $limit) {
+        return true;
+    }
+
+    $session->set($key, [
+        "time" => time() + $seconds,
+        "requests" => 1
+    ]);
+    return false;
+}

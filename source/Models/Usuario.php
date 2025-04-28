@@ -17,4 +17,13 @@ class Usuario extends Model
        $find = $this->find("id_usuario = :id","id={$idUsuario}", $columns);
         return $find->fetch();    
     }
+
+
+
+    public function save() : bool
+    {
+        $this->create($this->safe());
+        return true;    
+    }
+
 }

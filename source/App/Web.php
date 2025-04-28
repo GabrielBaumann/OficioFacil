@@ -28,6 +28,12 @@ class Web extends Controller
                 return;
            }
            
+           if (request_limit("weblogin", 3, "1")) {
+                $json["message"] = $this->message->error("Você já efetuou o limte de 03 tentativas. Aguarde 01 minuto para tentar novamente")->render();
+                echo json_encode($json);
+                return;
+           }
+
            if(empty($data['usuario']) || empty($data['senha'])) {
                 $json['message'] = $this->message->warning("Informe o usuario e senha para entrar.")->render();
                 $json['erro'] = "error";
