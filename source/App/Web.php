@@ -57,7 +57,7 @@ class Web extends Controller
         }
 
         echo $this->view->renderizar("login", [
-            "title" => "Login Office"
+            "title" => "OfícioFácil"
         ]);
 
     }
