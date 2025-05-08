@@ -8,7 +8,7 @@ define("CONF_DB_NAME", "db_office");
 
 // URLs
 define("CONF_URL_BASE", "https://www.oficiofacil.com.br");
-define("CONF_URL_TEST", "https://www.localhost/oficiofacil");
+define("CONF_URL_TEST", "http://localhost/OficioFacil");
 
 
 // VIEW

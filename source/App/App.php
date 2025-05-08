@@ -2,7 +2,7 @@
 
 namespace Source\App;
 
-use Source\Support\GerarPdf;
+// use Source\Support\GerarPdf;
 use Source\Models\NumeroIntervalo;
 use Source\Models\NumeroOficio;
 
@@ -84,9 +84,10 @@ class App extends Controller
     {   
         $session = new Session();
         $session->unset("usuario");
-        
-        echo $this->view->renderizar("sair",[
-            "title" => "Exit"
+        $session->destroy();
+
+        echo $this->view->renderizar("login",[
+            "title" => "OfícioFácil"
         ]);
     }
 
