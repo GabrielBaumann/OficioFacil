@@ -4,7 +4,7 @@
     <div class="ajax_response absolute top-0 left-0 w-full z-50 rounded hidden"></div>
     <?= csrf_input(); ?>
 
-    <div class="flex flex-col md:flex-row w-full h-auto md:h-[600px] max-w-4xl bg-white rounded-tl-[100px] rounded-tr-[20px] rounded-br-[100px] rounded-bl-[20px] md:shadow-lg overflow-hidden m-5">
+    <div class="flex flex-col md:flex-row w-full h-auto md:h-[600px] max-w-4xl bg-transparent md:bg-white rounded-tl-[100px] rounded-tr-[20px] rounded-br-[100px] rounded-bl-[20px] md:shadow-lg overflow-hidden m-5">
         <div class="hidden md:flex md:w-1/2 bg-blue-600 text-white p-10 flex flex-col justify-center">
             <h2 class="text-2xl font-bold">Bem vindo ao OficioFácil</h2>
             <div class="w-16 border-b-2 border-white my-3"></div>
@@ -22,11 +22,11 @@
                 <div class="w-12 border-b-2 border-blue-600 my-3"></div>
                 <input name="usuario" type="text" placeholder="Seu usuário..." class="w-full p-2 border border-gray-400 rounded mt-2 focus:outline-none focus:ring-2 focus:ring-blue-600">
                 <input name="senha" type="password" placeholder="Sua senha..." class="w-full p-2 border border-gray-400 rounded mt-4 focus:outline-none focus:ring-2 focus:ring-blue-600">
-                <button type="submit" class="w-full bg-blue-600 text-white font-semibold py-2 rounded mt-4 hover:bg-blue-700 transition">ENTRAR</button>
+                <button type="submit" class="w-full bg-blue-600 text-white font-semibold py-2 rounded-full md:rounded mt-4 hover:bg-blue-700 transition">ENTRAR</button>
             </div>
             <div class="mt-10 justify-center items-center flex flex-col">
                 <p>Desenvolvido por</p>
-                <img src="/views/assets/CERBERUS LOGO JPG.jpg" alt="logo" class="h-[100px] w-[100px] object-contain">
+                <img src="<?= themes("/views/assets/cerberus_logo.png") ?>" alt="logo" class="h-[100px] w-[100px] object-contain" />
             </div>
         </div>
     </div>

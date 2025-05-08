@@ -4,7 +4,7 @@ namespace Source\App;
 
 use Source\Core\Controller;
 use Source\Models\Autenticar;
-use Source\Models\Usuario;
+// use Source\Models\Usuario;
 use Source\Support\Message;
 
 class Web extends Controller
@@ -55,11 +55,9 @@ class Web extends Controller
             };
             return;
         }
-
+        
         echo $this->view->renderizar("login", [
             "title" => "OfícioFácil"
         ]);
-
     }
-
 }

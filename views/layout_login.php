@@ -12,7 +12,7 @@
             }
         </style>
     </head>
-<body class="flex items-center justify-center min-h-screen bg-gray-100">
+<body class="flex items-center justify-center h-screen w-full bg-gray-100">
     
     <main>
         <?= $this->section("content"); ?>
