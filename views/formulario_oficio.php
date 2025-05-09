@@ -1,64 +1,73 @@
-<?php $this->layout('layout_formulario', ['title' => $title, 
-    'intervalo' => $intervalo, 
+<?php $this->layout("layout_formulario", [ 
+    'unidade' => $unidade, 
     'historico' => $historico, 
+    'intervalo' => $intervalo ,
     'usuario' => $usuario, 
-    'unidade' => $unidade,
-    'totHistorico' => $totHistorico
-    ])?>
-<main class="flex-1 py-6 px-4">
-            <div class="max-w-4xl mx-auto">
-        <form action="<?= url("/of"); ?>" method="POST">
-        <?= csrf_input(); ?>
-            <div class="bg-white rounded-xl shadow-sm border border-gray-200 p-6 mb-6">
-                <h2 class="text-xl font-bold text-center text-gray-900 mb-6">Selecione um intervalo</h2>
-                    
-                <div class="flex flex-col md:flex-row md:space-x-4 space-y-4 md:space-y-0">
-                    <div class="md:w-1/2" id="intervaloMais">
-                        <?php $this->insert('intervalo_mais', ['intervalo' => $intervalo]) ?>
-                    </div>
-            
-                    <div class="md:w-1/2">
-                        <label class="block text-sm font-medium text-gray-700 mb-2">Até</label>
-                        <input
-                            type="number"
-                            id="max-number"
-                            name="max-number"
-                            class="appearance-none w-full px-4 py-3 text-base rounded-full bg-white border border-gray-400 focus:border-blue-500 focus:ring-2 focus:ring-blue-200 outline-none transition hover:border-gray-400"
-                            placeholder="Número final"
-                            min="0"
-                            required
-                        >
-                    </div>
-                </div>
-                <!-- Campo de Observação -->
-                <div class="mt-6">
-                    <label class="block text-sm font-medium text-gray-700 mb-2">
-                        Observação <span class="text-gray-500 font-normal">(opcional)</span>
-                    </label>
-                    <textarea
-                        class="w-full px-4 py-3 text-base rounded-xl bg-white border border-gray-400 focus:border-blue-500 focus:ring-2 focus:ring-blue-200 outline-none transition hover:border-gray-400 min-h-[100px]"
-                        placeholder="Adicione alguma observação sobre este intervalo..."
-                        id="observacao"
-                        name="observacao"
-                    ></textarea>
-                </div>
-                    
-                <button id="visualizar" class="w-full md:w-[calc(100%-1rem)] md:mx-auto mt-6 bg-blue-600 hover:bg-blue-700 text-white font-medium py-3 px-6 rounded-full transition-all flex items-center justify-center space-x-2 text-base">
-                    <span>Confirmar Intervalo</span>
-                    <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7" />
-                    </svg>
-                </button>
-            </div>
-        </form>
+    'totHistorico' => $totHistorico,
+    'historicoGeral' => $historicoGeral,
+    'totGeral' => $totGeral,
+    'unidade' => $unidade
+    ]); ?>
 
-        <!-- Histórico -->
-        <div>
-            <h2 class="text-xl font-bold text-center text-gray-900 mb-6">Histórico</h2>
+<main class="flex-1 py-6 px-4 sm:px-6">
+    <div class="max-w-7xl mx-auto">
+        <div id="mainView" class="block">
+            <div class="grid grid-cols-1 lg:grid-cols-2 gap-6">
+                <div class="bg-white rounded-lg border border-gray-100 p-6 shadow-sm">
+                    <h2 class="text-xl font-semibold text-gray-900 mb-6">Gerar novo intervalo</h2>
+                    <form action="<?= url("/of"); ?>" method="POST">
+                        <?= csrf_input(); ?>  
+                        <div class="space-y-4">
+                            <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
+                                <div id="intervaloMais">
+                                    <?php $this->insert('intervalo_mais', ['intervalo' => $intervalo]) ?>
+                                </div>
+                                
+                                <div>
+                                    <label class="block text-sm font-medium text-gray-700 mb-1">Até</label>
+                                    <input 
+                                        type="number"
+                                        id="max-number"
+                                        name="max-number"
+                                        class="w-full px-4 py-2.5 text-sm rounded-lg bg-white border border-gray-200 focus:border-blue-500 focus:ring-1 focus:ring-blue-200 outline-none transition hover:border-gray-300"
+                                        placeholder="Número final"
+                                        min="0"
+                                        required
+                                    >
+                                </div>
+                            </div>
 
-            <!-- Container principal do histórico -->
-            <div id="historicoDados" class="bg-white rounded-xl shadow-sm border border-gray-200">
-                <?php $this->insert('historico', ['historico' => $historico, 'totHistorico' => $totHistorico]) ?>
+                            <div>
+                                <label class="block text-sm font-medium text-gray-700 mb-1">
+                                    Observação <span class="text-gray-400">(opcional)</span>
+                                </label>
+                                <textarea 
+                                    class="w-full px-4 py-2.5 text-sm rounded-lg bg-white border border-gray-200 focus:border-blue-500 focus:ring-1 focus:ring-blue-200 outline-none transition hover:border-gray-300 min-h-[100px]"
+                                    placeholder="Adicione alguma observação sobre este intervalo..."
+                                    id="observacao"
+                                    name="observacao"
+                                ></textarea>
+                            </div>
+                            
+                            <button id="visualizar" name="btn-send" class="w-full mt-2 bg-blue-600 hover:bg-blue-700 text-white font-medium py-2.5 px-4 rounded-lg transition flex items-center justify-center space-x-2 text-sm">
+                                <span>Confirmar Intervalo</span>
+                                <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7" />
+                                </svg>
+                            </button>
+                        </div>
+                    </form>
+                </div>
+
+                <!-- Histórico -->
+                <div id="historicoDados" class="space-y-6">
+                    <?php if($usuario->tipo_acesso === "adm" || $usuario->tipo_acesso === "dev"): ?>
+                        <?php $this->insert('historicoUnidade', ['historico' => $historico, 'totHistorico' => $totHistorico]) ?>
+                        <?php $this->insert('historicoGeral', ['historicoGeral' => $historicoGeral, 'totGeral' => $totGeral, 'unidade' => $unidade]) ?>
+                    <?php else: ?>    
+                        <?php $this->insert('historicoUnidade', ['historico' => $historico, 'totHistorico' => $totHistorico]) ?>
+                    <?php endif; ?>
+                </div>
             </div>
         </div>
     </div>

@@ -107,4 +107,9 @@ class NumeroIntervalo extends Model
         return ($this->fetch());
     }
 
+    public function getHistoricoGeral()
+    {   
+
+    }
+
 }
