@@ -26,7 +26,7 @@
                                         <?= tempoDecorrido($elemento->data_cadastro) ?>
                                     </span>
                                     <span class="ml-10 text-blue-500">
-                                        <?= $unidade->unidade ?>
+                                        <?= $elemento->nome_unidade;?>
                                     </span>
                                 </div>
                             </div>

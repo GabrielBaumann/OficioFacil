@@ -167,3 +167,62 @@ function request_limit(string $key, int $limit = 5, int $seconds = 60):bool
     ]);
     return false;
 }
+
+/**
+ * Função para senitizer input
+ */
+
+function cleanInputData(array $data, ?array $removerFilds = null): array
+{
+    if($removerFilds){
+        $allKeys = array_keys($data);
+        $requiredFields = array_diff($allKeys, $removerFilds);
+    } else {
+        $allKeys = array_keys($data);
+        $requiredFields = $allKeys;
+    }
+
+    $sanitezed = [];
+    $errors = [];
+    
+    if($removerFilds){
+
+        foreach ($removerFilds as $field) {
+            $value = trim($data[$field]);
+            $value = strip_tags($value);
+            $value = htmlspecialchars($value, ENT_QUOTES, 'UTF-8');
+
+            $sanitezed[$field] = $value;
+        }
+    }
+
+
+    foreach ($requiredFields as $field) {
+        if (!isset($data[$field])) {
+            $errors[$field] = "Campo '$field' está vazio.";
+            continue;
+        }
+
+        // Remove espaços em branco
+        $value = trim($data[$field]);
+
+        // Se estiver vazio após o trim, é inválido
+        if ($value === "") {
+            $errors[$field] = "Campo '$field' está vazio.";
+            continue;
+        }
+
+        // Sanitize contra scripts e HTML
+
+        $value = strip_tags($value);
+        $value = htmlspecialchars($value, ENT_QUOTES, 'UTF-8');
+
+        $sanitezed[$field] = $value;
+    }
+
+    return [
+        "valid" => empty($errors),
+        "data" => $sanitezed,
+        "errors" => $errors
+    ];
+}

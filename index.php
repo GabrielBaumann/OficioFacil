@@ -23,6 +23,15 @@ $route->get("/gerar/{id}", "App:gerarpdf");
 
 $route->get("/sair", "App:fechar");
 
+// User
+$route->get("/user", "App:user");
+$route->get("/addUser" , "App:modalUser");
+$route->get("/addUser/{idUser}" , "App:modalUser");
+$route->post("/addUser" , "App:modalUser");
+$route->post("/addUser/{idUser}" , "App:modalUser");
+
+
+
 // ROUTER
 $route->dispatch();
 

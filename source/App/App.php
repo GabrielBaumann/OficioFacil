@@ -10,6 +10,8 @@ use Source\Core\Controller;
 use Source\Core\Session;
 use Source\Models\Autenticar;
 use Source\Models\Unidade;
+use Source\Models\Usuario;
+use Source\Support\Message;
 
 class App extends Controller
 {
@@ -63,7 +65,17 @@ class App extends Controller
         }
         
         $intervaloHistorico = (new NumeroIntervalo());
-        
+
+        $query = $intervaloHistorico->select(
+            ['numero_intervalo.*', 
+            'usuario.usuario AS nome_usuario',
+            'unidade.unidade AS nome_unidade'
+            ])
+            ->join('usuario', 'numero_intervalo.id_usuario = usuario.id_usuario')
+            ->join('unidade', 'usuario.id_unidade = unidade.id_unidade')
+            ->orderBy('id_numero_intervalo', 'DESC')
+            ->get();
+
         $ultimoIntervalo = $intervalo->find()->order("id_numero_intervalo DESC")->fetch();
         $intervaloHistorico->getHistorico($usuario->id_usuario);
         $unidade = (new Unidade());
@@ -77,8 +89,8 @@ class App extends Controller
             "totHistorico" => $intervaloHistorico->count($usuario->id_usuario),
             "usuario" => $usuario,
             "unidade" => $unidade->fetch(),
-            "historicoGeral" => (new NumeroIntervalo())->find()->order("id_numero_intervalo DESC")->fetch(true),
-            "totGeral" => count((new NumeroIntervalo())->find()->fetch(true))
+            "historicoGeral" => $query,
+            "totGeral" => count((new NumeroIntervalo())->find()->fetch(true)),
         ]);
     }
 
@@ -121,16 +133,21 @@ class App extends Controller
 
             if($user->tipo_acesso === "adm" || $user->tipo_acesso === "dev") {
 
-                $intervaloHistorico = (new NumeroIntervalo())->find()->order("id_numero_intervalo DESC")->fetch(true);
+                $intervaloHistorico = (new NumeroIntervalo());
 
-
-                $re = (new NumeroIntervalo())->find("id_numero_intervalo = :id", "id=*");
-                    var_dump($re->fetch(true));
+                $query = $intervaloHistorico->select(
+                    ['numero_intervalo.*', 
+                    'usuario.usuario AS nome_usuario',
+                    'unidade.unidade AS nome_unidade'
+                    ])
+                    ->join('usuario', 'numero_intervalo.id_usuario = usuario.id_usuario')
+                    ->join('unidade', 'usuario.id_unidade = unidade.id_unidade')
+                    ->orderBy('id_numero_intervalo', 'DESC')
+                    ->get();
 
                 echo $this->view->renderizar("historicoGeral", [
-                    "historicoGeral" => $intervaloHistorico,
-                    "totGeral" => count($intervaloHistorico),
-                    "unidade" => (new Unidade())->find()->fetch(true)
+                    "historicoGeral" => $query,
+                    "totGeral" => count((new NumeroIntervalo())->find()->fetch(true)),
                 ]);
             }
         }
@@ -147,5 +164,84 @@ class App extends Controller
             "title" => "Impressão",
             "numeros" => $numero
         ]);
+    }
+
+    /**
+     * User
+     */
+
+    public function user(?array $data) : void
+    {   
+
+        $usuario = (new Usuario())->find()->limit(10)->fetch(true);
+
+        echo $this->view->renderizar("usuario", [
+            "usuarios" => $usuario
+        ]);  
+    }
+
+    public function modalUser(?array $data) : void
+    {
+
+
+        if(isset($data["idUser"])) {
+            $id = filter_var($data["idUser"], FILTER_SANITIZE_FULL_SPECIAL_CHARS);
+            $idUser = (new Usuario())->findIdUsuario($id);
+        }
+
+        if(!empty($data['csrf'])) {
+            
+            if(!csrf_verify($data)) {
+                $json["message"] = (new Message())->warning("Erro ao enivar, use o formulário!")->render();
+                echo json_encode($json);
+                return;
+            }
+        
+            $cleanArray = cleanInputData($data);
+
+            if(!$cleanArray['valid']) {
+                $json["message"] = (new Message())->error("Preencha os campos obrigatórios!")->render();
+                echo json_encode($json);
+                return;
+            }
+
+            $dataClean = $cleanArray['data'];
+
+            $usuario = (new Usuario());
+
+            $usuario->id_unidade = $dataClean['unit'];
+            $usuario->nome = $dataClean['name'];
+            $usuario->usuario = $dataClean['usuario'];
+            $usuario->senha = passwd($dataClean['password']);
+            $usuario->tipo_acesso = $dataClean['typeAccess'];
+            $usuario->ativo = $dataClean['status'];
+
+            if(isset($idUser)) {
+                $usuario->id_usuario = $idUser->id_usuario;
+            }
+
+            if($usuario->save()) {
+                $json["message"] = $this->message->success("Registro salvo com sucesso!")->render();
+                $json["redirected"] = url("/user");
+                echo json_encode($json);
+                return;
+            }
+        }
+
+        $unidades = (new Unidade())->find()->order("unidade")->fetch(true);
+
+        echo $this->view->renderizar("modalForm", [
+            "usuario" => $idUser ?? null,
+            "unidades" => $unidades
+        ]);  
+    }
+
+    public function updateList() : void
+    {   
+        
+        $usuario = (new Usuario())->find()->limit(10)->fetch(true);
+        echo $this->view->renderizar("list_usuario", [
+            "usuarios" => $usuario
+        ]);  
     }
 }

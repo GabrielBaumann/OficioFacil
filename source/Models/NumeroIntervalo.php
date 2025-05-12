@@ -105,11 +105,5 @@ class NumeroIntervalo extends Model
         }
         $this->find("id_usuario = :id","id={$idUsuario}")->order("id_numero_intervalo DESC");
         return ($this->fetch());
-    }
-
-    public function getHistoricoGeral()
-    {   
-
-    }
-
+    }       
 }

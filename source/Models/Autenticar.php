@@ -26,8 +26,6 @@ class Autenticar extends Model
     public function logar(string $usuario, string $senha) : bool
     {   
         $user = $this->find("usuario = :u", "u={$usuario}")->fetch();
-        // $user->senha = passwd($senha);
-        // $user->save();
 
         if ($user){
             

@@ -2,6 +2,8 @@
 
 namespace Source\Core;
 
+use PDO;
+use PDOStatement;
 use Source\Support\Message;
 
 /**
@@ -31,6 +33,17 @@ abstract class Model
 
     protected $offset;
 
+    // SELECT INNER JOIN
+    protected array $select = [];
+
+    protected array $joins = [];
+
+    protected array $where = [];
+
+    protected array $paramsSelect = [];
+
+    protected array $orderBy = [];
+
     /** @var string $entity database table */
     protected static $entity;
 
@@ -54,6 +67,7 @@ abstract class Model
 
         $this->message = new Message();
     }
+
 
     /**
      * @param $name
@@ -277,5 +291,76 @@ abstract class Model
             }
         }
         return true;
+    }
+
+    /**
+     * SELECT COM INNER JOIN
+     */
+
+    public function select(array $columns): self
+    {
+        $this->select = $columns;
+        return $this;
+    }
+
+    public function join(string $table, string $condition, string $type = "INNER") : self
+    {
+        $this->joins[] = [
+            "table" => $table,
+            "condition" => $condition,
+            "type" => strtoupper($type)
+        ];
+        return $this;
+    }
+
+    public function where(string $column, string $operator, $value) : self
+    {
+        $paramName = "param_" . count($this->paramsSelect);
+        $this->where[] = "$column $operator :$paramName";
+        $this->paramsSelect[$paramName] = $value;
+        return $this;
+    }
+
+    public function orderBy(string $column, string $direction = "ASC") : self
+    {
+        $this->orderBy[] = "$column $direction";
+        return $this;    
+    }
+
+    public function  build() : string
+    {
+        $select = empty($this->select) ? '*' : implode(', ', $this->select);
+        $query = "SELECT $select FROM " . static::$entity ."";
+
+        foreach ($this->joins as $join) {
+            $query .= " {$join['type']} JOIN {$join['table']} ON {$join['condition']}";
+        }
+
+        if (!empty($this->where)) {
+            $query .= " WHERE " . implode(', ', $this->where);
+        }
+
+        if (!empty($this->orderBy)) {
+            $query .= ' ORDER BY ' . implode(', ', $this->orderBy);
+        }
+
+        return $query;
+    }
+
+    public function execute()
+    {
+        $query = $this->build();
+        $stmt = Connect::getInstance()->prepare($query);
+
+        foreach ($this->paramsSelect as $param => $value) {
+            $stmt->bindValue(":" . $param, $value);
+        }
+
+        $stmt->execute();
+        return $stmt->fetchAll(\PDO::FETCH_CLASS, static::class);
+    }
+
+    public function get() {
+        return $this->execute();
     }
 }

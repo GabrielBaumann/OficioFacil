@@ -63,7 +63,7 @@
                 <div id="historicoDados" class="space-y-6">
                     <?php if($usuario->tipo_acesso === "adm" || $usuario->tipo_acesso === "dev"): ?>
                         <?php $this->insert('historicoUnidade', ['historico' => $historico, 'totHistorico' => $totHistorico]) ?>
-                        <?php $this->insert('historicoGeral', ['historicoGeral' => $historicoGeral, 'totGeral' => $totGeral, 'unidade' => $unidade]) ?>
+                        <?php $this->insert('historicoGeral', ['historicoGeral' => $historicoGeral, 'totGeral' => $totGeral]) ?>
                     <?php else: ?>    
                         <?php $this->insert('historicoUnidade', ['historico' => $historico, 'totHistorico' => $totHistorico]) ?>
                     <?php endif; ?>
