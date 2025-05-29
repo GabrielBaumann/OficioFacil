@@ -21,7 +21,7 @@
               <?php endif;?>
           </div>
           
-          <div class="flex flex-1 justify-end">
+          <div class="flex flex-1 justify-end z-1">
             <a href="<?= url("/sair"); ?>" class="text-sm/6 font-semibold text-gray-900">Sair<span aria-hidden="true">&rarr;</span></a>
           </div>
         </nav>

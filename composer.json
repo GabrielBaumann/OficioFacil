@@ -34,6 +34,7 @@
       "ext-pdo": "*",
       "league/plates": "^3.5",
       "coffeecode/router": "*",
-      "mpdf/mpdf": "^8.0"
+      "mpdf/mpdf": "^8.0",
+        "coffeecode/paginator": "^2.0"
     }
   }

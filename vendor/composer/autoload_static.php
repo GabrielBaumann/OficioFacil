@@ -44,6 +44,7 @@ class ComposerStaticInit621717721aafd72465fb8d2b8e024051
         'C' => 
         array (
             'CoffeeCode\\Router\\' => 18,
+            'CoffeeCode\\Paginator\\' => 21,
         ),
     );
 
@@ -87,6 +88,10 @@ class ComposerStaticInit621717721aafd72465fb8d2b8e024051
         'CoffeeCode\\Router\\' => 
         array (
             0 => __DIR__ . '/..' . '/coffeecode/router/src',
+        ),
+        'CoffeeCode\\Paginator\\' => 
+        array (
+            0 => __DIR__ . '/..' . '/coffeecode/paginator/src',
         ),
     );
 

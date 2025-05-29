@@ -15,6 +15,7 @@ $route->namespace("Source\App");
 $route->get("/", "Web:login");
 $route->post("/", "Web:login");
 
+// Craft
 $route->get("/of", "App:oficio");
 $route->post("/of", "App:oficio");
 $route->get("/render/{local}", "App:atualizar");
@@ -22,9 +23,11 @@ $route->get("/render/{local}", "App:atualizar");
 $route->get("/gerar/{id}", "App:gerarpdf");
 
 $route->get("/sair", "App:fechar");
+$route->get("/pesquisar/{terms}", "App:searchInteval");
 
 // User
 $route->get("/user", "App:user");
+$route->get("/user/p/{page}", "App:user");
 $route->get("/addUser" , "App:modalUser");
 $route->get("/addUser/{idUser}" , "App:modalUser");
 $route->post("/addUser" , "App:modalUser");

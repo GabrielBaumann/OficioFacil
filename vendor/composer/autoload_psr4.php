@@ -16,4 +16,5 @@ return array(
     'League\\Plates\\' => array($vendorDir . '/league/plates/src'),
     'DeepCopy\\' => array($vendorDir . '/myclabs/deep-copy/src/DeepCopy'),
     'CoffeeCode\\Router\\' => array($vendorDir . '/coffeecode/router/src'),
+    'CoffeeCode\\Paginator\\' => array($vendorDir . '/coffeecode/paginator/src'),
 );
