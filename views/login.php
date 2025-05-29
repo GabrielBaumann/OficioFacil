@@ -1,33 +1,38 @@
 <?php $this->layout('layout_login', ["title" => $title]) ?>
-
-<form action="<?= url("/"); ?>" method="post">
-    <div class="ajax_response absolute top-0 left-0 w-full z-50 rounded hidden"></div>
-    <?= csrf_input(); ?>
-
-    <div class="flex flex-col md:flex-row w-full h-auto md:h-[600px] max-w-4xl bg-transparent md:bg-white rounded-tl-[100px] rounded-tr-[20px] rounded-br-[100px] rounded-bl-[20px] md:shadow-lg overflow-hidden m-5">
-        <div class="hidden md:flex md:w-1/2 bg-blue-600 text-white p-10 flex flex-col justify-center">
-            <h2 class="text-2xl font-bold">Bem vindo ao OficioFácil</h2>
-            <div class="w-16 border-b-2 border-white my-3"></div>
-            <p class="text-sm">Insira suas informações para ter acesso ao dashboard e poder gerenciar seus ofícios com rapidez e autonomia.</p>
-            <button class="mt-4 px-4 py-2 border border-white rounded-full text-white cursor-default">Quero conhecer</button>
+    <div class="flex min-h-full flex-col justify-center px-6 py-20 xl:py-[200px] lg:px-8">
+        <div class="sm:mx-auto sm:w-full sm:max-w-sm">
+            <h1 class="flex items-center justify-center gap-2 text-2xl font-bold tracking-tight text-blue-500">
+                <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="size-10">
+                    <path stroke-linecap="round" stroke-linejoin="round" d="M19.5 14.25v-2.625a3.375 3.375 0 0 0-3.375-3.375h-1.5A1.125 1.125 0 0 1 13.5 7.125v-1.5a3.375 3.375 0 0 0-3.375-3.375H8.25M9 16.5v.75m3-3v3M15 12v5.25m-4.5-15H5.625c-.621 0-1.125.504-1.125 1.125v17.25c0 .621.504 1.125 1.125 1.125h12.75c.621 0 1.125-.504 1.125-1.125V11.25a9 9 0 0 0-9-9Z" />
+                </svg>
+                OfícioFácil
+            </h1>
+            <h2 class="mt-10 text-center text-2xl font-bold tracking-tight text-gray-900">Insira suas informações</h2>
         </div>
-        <div class="md:w-1/2 p-10 flex flex-col justify-center items-center">
-            <div class="w-full text-center mb-[100px] md:mb-10">
-                <h1 class="text-4xl font-bold text-blue-600 md:hidden flex items-center justify-center md:justify-left gap-2">
-                    <i class="fas fa-file-alt"></i> OfícioFácil
-                </h1>
+
+        <div class="mt-10 sm:mx-auto sm:w-full sm:max-w-sm">
+            <form class="space-y-6" action="<?= url("/"); ?>" method="post">
+            <div class="ajax_response absolute top-0 left-0 w-full z-50 rounded hidden"></div>
+            <?= csrf_input(); ?>
+            <div>
+                <label for="Usuário" class="block text-sm/6 font-medium text-gray-900">Usuário</label>
+                <div class="mt-2">
+                <input name="usuario" type="text" required class="border border-gray-400 block w-full rounded-md bg-white px-3 py-1.5 text-base text-gray-900 outline-1 -outline-offset-1 outline-gray-300 placeholder:text-gray-400 focus:outline-2 focus:-outline-offset-2 focus:outline-blue-600 sm:text-sm/6">
+                </div>
             </div>
-            <div class="w-full">
-                <h2 class="text-2xl font-semibold text-blue-600">Faça seu login</h2>
-                <div class="w-12 border-b-2 border-blue-600 my-3"></div>
-                <input name="usuario" type="text" placeholder="Seu usuário..." class="w-full p-2 border border-gray-400 rounded mt-2 focus:outline-none focus:ring-2 focus:ring-blue-600">
-                <input name="senha" type="password" placeholder="Sua senha..." class="w-full p-2 border border-gray-400 rounded mt-4 focus:outline-none focus:ring-2 focus:ring-blue-600">
-                <button type="submit" class="w-full bg-blue-600 text-white font-semibold py-2 rounded-full md:rounded mt-4 hover:bg-blue-700 transition">ENTRAR</button>
+
+            <div>
+                <div class="flex items-center justify-between">
+                <label for="Senha" class="block text-sm/6 font-medium text-gray-900">Senha</label>
+                </div>
+                <div class="mt-2">
+                <input name="senha" type="password" required class="border border-gray-400 block w-full rounded-md bg-white px-3 py-1.5 text-base text-gray-900 outline-1 -outline-offset-1 outline-gray-300 placeholder:text-gray-400 focus:outline-2 focus:-outline-offset-2 focus:outline-blue-600 sm:text-sm/6">
+                </div>
             </div>
-            <div class="mt-10 justify-center items-center flex flex-col">
-                <p>Desenvolvido por</p>
-                <img src="<?= themes("/views/assets/cerberus_logo.png") ?>" alt="logo" class="h-[100px] w-[100px] object-contain" />
+
+            <div>
+                <button type="submit" class="flex w-full justify-center rounded-md bg-blue-600 px-3 py-1.5 text-sm/6 font-semibold text-white shadow-xs hover:bg-blue-500 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-blue-600">Entrar</button>
             </div>
+            </form>
         </div>
     </div>
-</form>
