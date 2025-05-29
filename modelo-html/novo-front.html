@@ -25,7 +25,7 @@
         <div class="mx-auto max-w-2xl py-20 sm:py-28 lg:py-32">
           <div class="hidden sm:mb-8 sm:flex sm:justify-center">
             <div class="relative rounded-full px-3 py-1 text-sm/6 text-gray-600 ring-1 ring-gray-900/10 hover:ring-gray-900/20">
-              Role a tela para baixo para ver o histórico ou <a href="#" class="font-semibold text-blue-800"><span class="absolute inset-0" aria-hidden="true"></span>Ver Histórico <span aria-hidden="true">&rarr;</span></a>
+              Role a tela para baixo para ver o histórico ou <a href="#historico" class="font-semibold text-blue-800"><span class="absolute inset-0" aria-hidden="true"></span>Ver Histórico <span aria-hidden="true">&rarr;</span></a>
             </div>
           </div>
           <div class="text-center">
@@ -65,14 +65,14 @@
       </div>
     </div>
 
-<div class="bg-gray-50 py-24 sm:py-32">
+<div id='historico' class="bg-gray-50 py-24 sm:py-32">
   <div class="mx-auto max-w-2xl px-6 lg:max-w-7xl lg:px-8">
     <h2 class="text-center text-base/7 font-semibold text-blue-800">Histórico</h2>
     <p class="mx-auto mt-2 max-w-lg text-center text-4xl font-semibold tracking-tight text-balance text-gray-950 sm:text-5xl">Esses são os intervalos mais recentes</p>
     
     <div class="mt-10 grid gap-4 sm:mt-16 lg:grid-cols-[repeat(auto-fit,minmax(400px,1fr))]"> <!-- Grid responsivo -->
       <!-- Primeiro Histórico -->
-      <div class="space-y-4"> <!-- Remova a classe "hidden" para mostrar -->
+      <div class="space-y-4">
         <h2 class="text-lg font-semibold text-gray-800">Meu Histórico</h2>
 
         <div class="relative">
@@ -95,6 +95,7 @@
         <div class="relative h-130">
           <div class="absolute inset-px rounded-lg bg-white"></div>
           <div class="relative h-full rounded-lg border border-gray-200 overflow-y-auto">
+            <!-- Essa é a linha -->
             <div class="space-y-3 p-2">
                 <div class="p-4 rounded-lg hover:bg-gray-50 transition border border-gray-100">
                     <div class="flex justify-between items-start">
@@ -119,6 +120,7 @@
                     </div>
                 </div>
             </div>
+
           </div>
           <div class="pointer-events-none absolute inset-px rounded-lg shadow-sm ring-1 ring-black/5"></div>
         </div>
@@ -173,7 +175,7 @@
                     </div>
                 </div>
             </div>
-
+            
           </div>
           <div class="pointer-events-none absolute inset-px rounded-lg shadow-sm ring-1 ring-black/5"></div>
         </div>

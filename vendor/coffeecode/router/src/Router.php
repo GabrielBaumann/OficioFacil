@@ -30,8 +30,8 @@ class Router extends Dispatch
     public function get(
         string $route,
         callable|string $handler,
-        string $name = null,
-        array|string $middleware = null
+        ?string $name = null,
+        array|string|null $middleware = null
     ): void {
         $this->addRoute("GET", $route, $handler, $name, $middleware);
     }
@@ -45,8 +45,8 @@ class Router extends Dispatch
     public function post(
         string $route,
         callable|string $handler,
-        string $name = null,
-        array|string $middleware = null
+        ?string $name = null,
+        array|string|null $middleware = null
     ): void {
         $this->addRoute("POST", $route, $handler, $name, $middleware);
     }
@@ -60,8 +60,8 @@ class Router extends Dispatch
     public function put(
         string $route,
         callable|string $handler,
-        string $name = null,
-        array|string $middleware = null
+        ?string $name = null,
+        array|string|null $middleware = null
     ): void {
         $this->addRoute("PUT", $route, $handler, $name, $middleware);
     }
@@ -75,8 +75,8 @@ class Router extends Dispatch
     public function patch(
         string $route,
         callable|string $handler,
-        string $name = null,
-        array|string $middleware = null
+        ?string $name = null,
+        array|string|null $middleware = null
     ): void {
         $this->addRoute("PATCH", $route, $handler, $name, $middleware);
     }
@@ -90,8 +90,8 @@ class Router extends Dispatch
     public function delete(
         string $route,
         callable|string $handler,
-        string $name = null,
-        array|string $middleware = null
+        ?string $name = null,
+        array|string|null $middleware = null
     ): void {
         $this->addRoute("DELETE", $route, $handler, $name, $middleware);
     }

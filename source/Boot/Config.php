@@ -4,7 +4,7 @@
 define("CONF_DB_HOST", "localhost");
 define("CONF_DB_USER", "root");
 define("CONF_DB_PASS", "");
-define("CONF_DB_NAME", "db_office");
+define("CONF_DB_NAME", "office_db");
 
 // URLs
 define("CONF_URL_BASE", "https://www.oficiofacil.com.br");
