@@ -206,7 +206,7 @@ class App extends Controller
 
     public function user(?array $data) : void
     {   
-
+        // Navegar entre as páginas
         if(isset($data["page"]) && !empty($data["page"])) {
 
             $usuario = (new Usuario())->find();
@@ -228,6 +228,10 @@ class App extends Controller
             echo json_encode($json);
             return;
         }
+
+        // Pesquisar dados pelo input ou selects
+        var_dump($data);
+
 
         $usuario = (new Usuario())->find();
         $pager = new Pager(url("/user/p/"));

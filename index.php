@@ -27,6 +27,7 @@ $route->get("/pesquisar/{terms}", "App:searchInteval");
 
 // User
 $route->get("/user", "App:user");
+$route->post("/user", "App:user");
 $route->get("/user/p/{page}", "App:user");
 $route->get("/addUser" , "App:modalUser");
 $route->get("/addUser/{idUser}" , "App:modalUser");
