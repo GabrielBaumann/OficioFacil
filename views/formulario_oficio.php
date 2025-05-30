@@ -53,7 +53,7 @@
                     </div>
                     </div>
                     <div class="mt-10">
-                    <button id="visualizar" name="btn-send" class="block w-full rounded-md bg-blue-800 px-3.5 py-2.5 text-center text-sm font-semibold text-white shadow-xs hover:bg-blue-700 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-blue-800">Gerar intervalo</button>
+                    <button id="visualizar" name="btn-send" class="cursor-pointer block w-full rounded-md bg-blue-800 px-3.5 py-2.5 text-center text-sm font-semibold text-white shadow-xs hover:bg-blue-700 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-blue-800">Gerar intervalo</button>
                     </div>
                 </form>
             </div>
@@ -65,17 +65,18 @@
       </div>
     </div>
 
-<div id='historicoDados' class="bg-gray-50 py-24 sm:py-32">
+<div class="bg-gray-50 py-24 sm:py-32">
   <div class="mx-auto max-w-2xl px-6 lg:max-w-7xl lg:px-8">
     <h2 class="text-center text-base/7 font-semibold text-blue-800">Histórico</h2>
     <p class="mx-auto mt-2 max-w-lg text-center text-4xl font-semibold tracking-tight text-balance text-gray-950 sm:text-5xl">Esses são os intervalos mais recentes</p>
-    
-    <div class="mt-10 grid gap-4 sm:mt-16 lg:grid-cols-[repeat(auto-fit,minmax(400px,1fr))]">
+    <div id="historicoDados">
       <?php if($usuario->tipo_acesso === "adm" || $usuario->tipo_acesso === "dev"): ?>
+        <div class="mt-10 grid gap-4 sm:mt-16 lg:grid-cols-[repeat(auto-fit,minmax(400px,1fr))]"> 
           <?php $this->insert('historicoUnidade', ['historico' => $historico, 'totHistorico' => $totHistorico]) ?>
           <?php $this->insert('historicoGeral', ['historicoGeral' => $historicoGeral, 'totGeral' => $totGeral]) ?>
-      <?php else: ?>    
-          <?php $this->insert('historicoUnidade', ['historico' => $historico, 'totHistorico' => $totHistorico]) ?>
+        </div>
+      <?php else: ?>
+        <?php $this->insert('historicoUnidade', ['historico' => $historico, 'totHistorico' => $totHistorico]) ?>
       <?php endif; ?>
     </div>
   </div>

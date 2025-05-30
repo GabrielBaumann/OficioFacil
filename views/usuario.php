@@ -1,7 +1,6 @@
-<?php
-use Source\Models\Unidade;
-$this->layout('layout_user', ['usuarios' => $usuarios]); ?>
+<?php $this->layout('layout_user', ['usuarios' => $usuarios]); ?>
 
+<<<<<<< HEAD
 <div class="overflow-x-auto">
     <table class="min-w-full responsive-table border border-gray-300">
         <thead class="bg-gray-300">
@@ -61,3 +60,7 @@ $this->layout('layout_user', ['usuarios' => $usuarios]); ?>
 </div>
 
             
+=======
+
+    <?php $this->insert("listUsers", ["usuarios" => $usuarios, "countUser" => $countUser, "paginator" => $paginator]); ?>
+>>>>>>> 2db06698415d2837e0990f137c269aee76580b6d

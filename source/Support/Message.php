@@ -13,14 +13,14 @@ use Source\Core\Session;
 class Message
 {
     /** @var string */
-    private $text;
+    private string $text;
 
     /** @var string */
-    private $type;
+    private string $type;
 
-    private $img;
+    private string $img;
 
-    private $titulo;
+    private string $titulo;
     /**
      * @return string
      */
@@ -111,8 +111,8 @@ class Message
     public function render(): string
     {
         // return "<div class='" . CONF_MESSAGE_CLASS . " {$this->getType()}'>{$this->getText()}</div>";
-        return "<div class=\"fixed top-4 right-4 z-50 max-w-sm w-full\">
-                    <div class=\"{$this->getType()} shadow-md flex items-start gap-2 animate-fade-in\">
+        return "<div class=\"z-100 fixed top-20 md:top-15 right-4 z-50 max-w-sm w-full\">
+                    <div class=\"{$this->getType()} flex items-start gap-2 animate-fade-in\">
                         {$this->getImg()}
                     <div>
                         <strong class=\"block\">{$this->getTitulo()}</strong>

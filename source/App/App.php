@@ -12,6 +12,7 @@ use Source\Models\Autenticar;
 use Source\Models\Unidade;
 use Source\Models\Usuario;
 use Source\Support\Message;
+use Source\Support\Pager;
 
 class App extends Controller
 {
@@ -31,6 +32,12 @@ class App extends Controller
         $usuario = Autenticar::usuarioLogado();
         $intervalo = (new NumeroIntervalo());
         if(!empty($data['csrf'])){
+
+            if(empty($data["max-number"])) {
+                $json["message"] = (new Message())->warning("O campo Número final é obrigatório!")->render();
+                echo json_encode($json);
+                return;
+            }
 
             $ultimoIntervalo = $intervalo->find()->order("id_numero_intervalo DESC")->fetch();
             $numeroIntervalor = ($ultimoIntervalo->fim ?? 0) + 1;
@@ -92,6 +99,33 @@ class App extends Controller
             "historicoGeral" => $query,
             "totGeral" => count((new NumeroIntervalo())->find()->fetch(true)),
         ]);
+    }
+
+    public function searchInteval(array $data) : void
+    {
+        $usuario = Autenticar::usuarioLogado();
+        $intervaloHistorico = (new NumeroIntervalo());
+        $intervaloHistorico->getHistorico($usuario->id_usuario);
+        $query = $intervaloHistorico->select(
+        ['numero_intervalo.*', 
+        'usuario.usuario AS nome_usuario',
+        'unidade.unidade AS nome_unidade'
+        ])
+        ->join('usuario', 'numero_intervalo.id_usuario = usuario.id_usuario')
+        ->join('unidade', 'usuario.id_unidade = unidade.id_unidade')
+        ->orderBy('id_numero_intervalo', 'DESC')
+        ->where("unidade","=","SEMDES GABINETE")
+        ->get();
+
+        // var_dump($query);
+
+        $html = $this->view->renderizar("listHistoryGeral", [
+            "historicoGeral" => $query
+        ]);
+
+        $json["html"] = $html;
+        echo json_encode($json);
+        return;
     }
 
     public function fechar() : void
@@ -173,10 +207,44 @@ class App extends Controller
     public function user(?array $data) : void
     {   
 
+<<<<<<< HEAD
         $usuario = (new Usuario())->find()->limit(8)->fetch(true);
+=======
+        if(isset($data["page"]) && !empty($data["page"])) {
+
+            $usuario = (new Usuario())->find();
+            $page = (!empty($data["page"]) && filter_var($data["page"], FILTER_VALIDATE_INT) >= 1 ? $data["page"] : 1);
+            $pager = new Pager(url("/user/p/"));
+            $pager->pager($usuario->count(), 12, $page);
+
+            $html = $this->view->renderizar("listUsers", [
+                "countUser" => $usuario->count(),
+                "usuarios" => $usuario
+                    ->limit($pager->limit())
+                    ->offset($pager->offset())
+                    ->order("nome")
+                    ->fetch(true),
+                "paginator" => $pager->render()
+            ]);  
+
+            $json["html"] = $html;
+            echo json_encode($json);
+            return;
+        }
+
+        $usuario = (new Usuario())->find();
+        $pager = new Pager(url("/user/p/"));
+        $pager->pager($usuario->count(), 12, 1);
+>>>>>>> 2db06698415d2837e0990f137c269aee76580b6d
 
         echo $this->view->renderizar("usuario", [
+            "countUser" => $usuario->count(),
             "usuarios" => $usuario
+                ->limit($pager->limit())
+                ->offset($pager->offset())
+                ->order("nome")
+                ->fetch(true),
+            "paginator" => $pager->render()
         ]);  
     }
 
@@ -237,9 +305,8 @@ class App extends Controller
     }
 
     public function updateList() : void
-    {   
-        
-        $usuario = (new Usuario())->find()->limit(10)->fetch(true);
+    {          
+        $usuario = (new Usuario())->find()->limit(12)->fetch(true);
         echo $this->view->renderizar("list_usuario", [
             "usuarios" => $usuario
         ]);  
