@@ -173,7 +173,7 @@ class App extends Controller
     public function user(?array $data) : void
     {   
 
-        $usuario = (new Usuario())->find()->limit(10)->fetch(true);
+        $usuario = (new Usuario())->find()->limit(8)->fetch(true);
 
         echo $this->view->renderizar("usuario", [
             "usuarios" => $usuario

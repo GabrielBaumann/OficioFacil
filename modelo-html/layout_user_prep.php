@@ -45,7 +45,7 @@
 <body class="bg-gray-50 font-sans mx-auto max-w-[1200px]">
     <header class="h-16 px-4 md:p-0 flex items-center justify-between sticky top-0 bg-white">
         <div class="flex items-center space-x-4">
-            <a href="index.html" class="p-1 rounded-full">
+            <a href="<?= url("/of"); ?>" class="p-1 rounded-full">
                 <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                     <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 19l-7-7m0 0l7-7m-7 7h18" />
                 </svg>
@@ -63,7 +63,7 @@
                 <div>
                     <h1 class="text-2xl text-gray-800">Gerenciamento de Usuários</h1>
                 </div>
-                <button class="bg-blue-600 hover:bg-blue-700 text-white px-4 py-2 rounded-lg flex items-center gap-2 w-full sm:w-auto justify-center">
+                <button type="submit" id="addUserBtn" data-url="<?= url("/addUser") ?>" class="bg-blue-600 hover:bg-blue-700 text-white px-4 py-2 rounded-lg flex items-center gap-2 w-full sm:w-auto justify-center">
                     <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" viewBox="0 0 20 20" fill="currentColor">
                         <path fill-rule="evenodd" d="M10 3a1 1 0 011 1v5h5a1 1 0 110 2h-5v5a1 1 0 11-2 0v-5H4a1 1 0 110-2h5V4a1 1 0 011-1z" clip-rule="evenodd" />
                     </svg>
@@ -102,61 +102,12 @@
 
         <!-- Users Table -->
         <div class="bg-white shadow-sm rounded-xl overflow-hidden">
-            <div class="overflow-x-auto">
-                <table class="min-w-full responsive-table">
-                    <thead class="bg-gray-50">
-                        <tr>
-                            <th scope="col" class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
-                                Nome
-                            </th>
-                            <th scope="col" class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
-                                Unidade
-                            </th>
-                            <th scope="col" class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
-                                Tipo de Acesso
-                            </th>
-                            <th scope="col" class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
-                                Status
-                            </th>
-                            <th scope="col" class="px-6 py-3 text-right text-xs font-medium text-gray-500 uppercase tracking-wider">
-                                Ação
-                            </th>
-                        </tr>
-                    </thead>
-                    <tbody class="bg-white divide-y divide-gray-200">
-                        <!-- Line -->
-                        <tr class="hover:bg-gray-50">
-                            <td data-label="Nome" class="px-6 py-4 whitespace-nowrap">
-                                <div class="flex items-center">
-                                    <div class="ml-4">
-                                        <div class="text-sm font-medium text-gray-900">João Silva</div>
-                                    </div>
-                                </div>
-                            </td>
-                            <td data-label="Unidade" class="px-6 py-4 whitespace-nowrap">
-                                <div class="text-sm text-gray-900">São Paulo</div>
-                            </td>
-                            <td data-label="Tipo de Acesso" class="px-6 py-4 whitespace-nowrap">
-                                <div class="text-sm text-gray-900">Administrador</div>
-                            </td>
-                            <td data-label="Status" class="px-6 py-4 whitespace-nowrap">
-                                <span class="status-badge px-2.5 py-0.5 rounded-full text-xs font-medium bg-green-100 text-green-800">
-                                    Ativo
-                                </span>
-                            </td>
-                            <td data-label="Ação" class="px-6 py-4 whitespace-nowrap text-right text-sm font-medium">
-                                <div class="flex justify-end">
-                                    <button class="text-blue-600 hover:text-blue-900 p-1 rounded-full hover:bg-blue-50">
-                                        <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" viewBox="0 0 20 20" fill="currentColor">
-                                            <path d="M13.586 3.586a2 2 0 112.828 2.828l-.793.793-2.828-2.828.793-.793zM11.379 5.793L3 14.172V17h2.828l8.38-8.379-2.83-2.828z" />
-                                        </svg>
-                                    </button>
-                                </div>
-                            </td>
-                        </tr>
-                    </tbody>
-                </table>
+            <div id="usuarioLista">
+                <?= $this->section("content"); ?>
             </div>
+
+            <!-- Modal COLOCAR OU TIRAR HIDDEN SE QUISER DESAPARECER ELE  -->
+            <div id="modal"></div>
 
             <!-- Pagination -->
             <div class="bg-white px-4 py-3 flex items-center justify-between border-t border-gray-200 sm:px-6">
@@ -203,5 +154,9 @@
             </div>
         </div>
     </div>
+<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+<script src="https://code.jquery.com/ui/1.13.2/jquery-ui.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery.form/4.3.0/jquery.form.min.js"></script>
+<script src="<?= themes("/lib/js/jquery.form.js"); ?>"></script>
 </body>
 </html>

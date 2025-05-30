@@ -3,8 +3,8 @@ use Source\Models\Unidade;
 $this->layout('layout_user', ['usuarios' => $usuarios]); ?>
 
 <div class="overflow-x-auto">
-    <table class="min-w-full responsive-table border border-gray-300">
-        <thead class="bg-gray-300">
+    <table class="min-w-full responsive-table">
+        <thead class="bg-gray-50">
             <tr>
                 <th scope="col" class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
                     Nome
@@ -26,7 +26,7 @@ $this->layout('layout_user', ['usuarios' => $usuarios]); ?>
         <?php foreach($usuarios as $usuario): ?>
             <tbody class="bg-white divide-y divide-gray-200">
                 <!-- Line -->
-                <tr class="cursor-pointer hover:bg-blue-200" data-url="<?= url("/addUser/{$usuario->id_usuario}") ?>">
+                <tr class="hover:bg-gray-50" data-url="<?= url("/addUser/{$usuario->id_usuario}") ?>">
                     <td data-label="Nome" class="px-6 py-4 whitespace-nowrap">
                         <div class="flex items-center">
                             <div class="ml-4">
