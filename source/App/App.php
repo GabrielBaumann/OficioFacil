@@ -230,7 +230,32 @@ class App extends Controller
         }
 
         // Pesquisar dados pelo input ou selects
-        var_dump($data);
+        
+        if(isset($data["input-search-name"]) || isset($data["select-search-status"]) || isset($data["select-search-type-access"])){
+
+            $search = isset($data["input-search-name"]) && $data["input-search-name"] ? trim(filter_var($data["input-search-name"], FILTER_SANITIZE_SPECIAL_CHARS)) : null;
+            $status = isset($data["select-search-status"]) && $data["select-search-status"] ? trim(filter_var($data["select-search-status"], FILTER_SANITIZE_SPECIAL_CHARS)) : null;
+            $typeAcess = isset($data["select-search-type-access"]) && $data["select-search-type-access"] ? trim(filter_var($data["select-search-type-access"], FILTER_SANITIZE_SPECIAL_CHARS)) : null;
+
+            var_dump($status);
+            
+            $conditions = [];
+            $params = [];
+
+            if(!empty($search)) {
+                $conditions[] = "usuario LIKE :u";
+                $params[] = "%{$search}%";
+            }
+
+            if(!is_null($status)) {
+                $conditions[] = "ativo = :a";
+                $params['a'] = $status;
+            }
+
+            
+            // var_dump($data);
+        }
+
 
 
         $usuario = (new Usuario())->find();
