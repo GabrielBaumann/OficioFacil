@@ -207,15 +207,12 @@ class App extends Controller
     public function user(?array $data) : void
     {   
 
-<<<<<<< HEAD
-        $usuario = (new Usuario())->find()->limit(8)->fetch(true);
-=======
         if(isset($data["page"]) && !empty($data["page"])) {
 
             $usuario = (new Usuario())->find();
             $page = (!empty($data["page"]) && filter_var($data["page"], FILTER_VALIDATE_INT) >= 1 ? $data["page"] : 1);
             $pager = new Pager(url("/user/p/"));
-            $pager->pager($usuario->count(), 12, $page);
+            $pager->pager($usuario->count(), 8, $page);
 
             $html = $this->view->renderizar("listUsers", [
                 "countUser" => $usuario->count(),
@@ -234,8 +231,7 @@ class App extends Controller
 
         $usuario = (new Usuario())->find();
         $pager = new Pager(url("/user/p/"));
-        $pager->pager($usuario->count(), 12, 1);
->>>>>>> 2db06698415d2837e0990f137c269aee76580b6d
+        $pager->pager($usuario->count(), 8, 1);
 
         echo $this->view->renderizar("usuario", [
             "countUser" => $usuario->count(),

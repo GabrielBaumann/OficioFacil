@@ -43,7 +43,7 @@
     </style>
 </head>
 <body class="bg-gray-50 font-sans mx-auto max-w-[1200px]">
-    <header class="h-16 px-4 md:p-0 flex items-center justify-between sticky top-0 bg-white">
+    <header class="h-16 px-4 md:p-0 flex items-center justify-between sticky top-0">
         <div class="flex items-center space-x-4">
             <a href="<?= url("/of"); ?>" class="p-1 rounded-full">
                 <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
