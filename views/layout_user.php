@@ -93,19 +93,18 @@
                         data-urlsearc="<?= url("/user"); ?>" 
                         name="select-search-status"
                         class="block w-full md:w-auto px-3 py-2 border border-gray-400 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500 bg-white">
-                        <option>Status</option>
+                        <option value="*">Status</option>
                         <option value="1">Ativo</option>
-                        <option>Inativo</option>
-                        <option>Pendente</option>
+                        <option value=0>Inativo</option>
                     </select>
                     <select
                         data-urlsearc="<?= url("/user"); ?>"
                         name="select-search-type-access"
                         class="block w-full md:w-auto px-3 py-2 border border-gray-400 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500 bg-white">
-                        <option>Tipo de Acesso</option>
-                        <option>Admin</option>
-                        <option>Editor</option>
-                        <option>Usuário</option>
+                        <option value="*">Tipo de Acesso</option>
+                        <option>adm</option>
+                        <option>dev</option>
+                        <option>user</option>
                     </select>
                 </div>
             </div>

@@ -62,7 +62,7 @@
                             <select name="status" class="w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-blue-500 focus:border-blue-500">
                                 <option value="" selected disabled>Selecione</option>
                                 <option value="1" <?= ($usuario->ativo ?? null) === 1 ? "selected" : ""?>>Ativo</option>
-                                <option value="0" <?= ($usuario->ativo ?? null) === 0 ? "selected" : ""?>>Cancelado</option>
+                                <option value="0" <?= ($usuario->ativo ?? null) === 0 ? "selected" : ""?>>Inativo</option>
                             </select>
                         </div>
                     </div>

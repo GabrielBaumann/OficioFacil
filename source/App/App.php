@@ -103,6 +103,9 @@ class App extends Controller
 
     public function searchInteval(array $data) : void
     {
+
+        var_dump($data);
+
         $usuario = Autenticar::usuarioLogado();
         $intervaloHistorico = (new NumeroIntervalo());
         $intervaloHistorico->getHistorico($usuario->id_usuario);
@@ -234,26 +237,53 @@ class App extends Controller
         if(isset($data["input-search-name"]) || isset($data["select-search-status"]) || isset($data["select-search-type-access"])){
 
             $search = isset($data["input-search-name"]) && $data["input-search-name"] ? trim(filter_var($data["input-search-name"], FILTER_SANITIZE_SPECIAL_CHARS)) : null;
-            $status = isset($data["select-search-status"]) && $data["select-search-status"] ? trim(filter_var($data["select-search-status"], FILTER_SANITIZE_SPECIAL_CHARS)) : null;
+            $value = trim((string) isset($data["select-search-status"]));
+            $status = isset($data["select-search-status"]) && $value !== "" ? trim(filter_var($data["select-search-status"], FILTER_SANITIZE_SPECIAL_CHARS)) : null;
             $typeAcess = isset($data["select-search-type-access"]) && $data["select-search-type-access"] ? trim(filter_var($data["select-search-type-access"], FILTER_SANITIZE_SPECIAL_CHARS)) : null;
-
-            var_dump($status);
             
+            $search = $search === "*" ? null : $search;
+            $status = $status === "*" ? null : $status;
+            $typeAcess = $typeAcess === "*" ? null : $typeAcess;
+
+            // var_dump($search, $status, $typeAcess);
+
             $conditions = [];
             $params = [];
 
             if(!empty($search)) {
                 $conditions[] = "usuario LIKE :u";
-                $params[] = "%{$search}%";
+                $params["u"] = "%{$search}%";
             }
 
             if(!is_null($status)) {
                 $conditions[] = "ativo = :a";
-                $params['a'] = $status;
+                $params["a"] = $status;
             }
 
-            
-            // var_dump($data);
+            if(!is_null($typeAcess)) {
+                $conditions[] = "tipo_acesso = :t";
+                $params["t"] = $typeAcess;
+            }
+
+            $where = implode(" AND ", $conditions);
+
+            $usuario = (new Usuario())->find($where, http_build_query($params));
+
+            $pager = new Pager(url("/user/p/"));
+            $pager->pager($usuario->count(), 8, 1);
+
+            $html = $this->view->renderizar("listUsers", [
+                "usuarios" => $usuario
+                    ->limit($pager->limit())
+                    ->offset($pager->offset())
+                    ->order("usuario")
+                    ->fetch(true),
+                "paginator" => $pager->render()
+            ]);
+
+            $json["html"] = $html;
+            echo json_encode($json);
+            return;
         }
 
 

@@ -23,7 +23,7 @@ $route->get("/render/{local}", "App:atualizar");
 $route->get("/gerar/{id}", "App:gerarpdf");
 
 $route->get("/sair", "App:fechar");
-$route->get("/pesquisar/{terms}", "App:searchInteval");
+$route->post("/pesquisar", "App:searchInteval");
 
 // User
 $route->get("/user", "App:user");
