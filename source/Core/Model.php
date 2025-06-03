@@ -337,7 +337,7 @@ abstract class Model
         }
 
         if (!empty($this->where)) {
-            $query .= " WHERE " . implode(', ', $this->where);
+            $query .= " WHERE " . implode(' OR ', $this->where);
         }
 
         if (!empty($this->orderBy)) {

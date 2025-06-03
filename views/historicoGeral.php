@@ -5,10 +5,10 @@
 
     <div class="relative">
       <input
-        
         data-search="<?= url("/pesquisar/"); ?>"
-        name="id-search-General"
-        id="id-search-General" 
+        data-update="update-search-general"
+        name="search-general"
+        id="search-general" 
         type="text" 
         placeholder="Pesquisar documentos..." 
         class="w-full pl-8 pr-4 py-2 border border-gray-300 rounded-lg focus:ring-blue-500 focus:border-blue-500"

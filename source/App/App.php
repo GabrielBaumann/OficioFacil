@@ -103,12 +103,20 @@ class App extends Controller
 
     public function searchInteval(array $data) : void
     {
+        $inputSearch = null;
 
-        var_dump($data);
+        if(isset($data["search-general"]) && !empty($data["search-general"])) {
+            $inputSearch = filter_var(trim($data["search-general"]), FILTER_SANITIZE_SPECIAL_CHARS);
+        }
+
+        if(isset($data["search-unit"]) && !empty($data["search-unit"])) {
+            $inputSearch = filter_var(trim($data["search-unit"]), FILTER_SANITIZE_SPECIAL_CHARS);
+        }
 
         $usuario = Autenticar::usuarioLogado();
         $intervaloHistorico = (new NumeroIntervalo());
         $intervaloHistorico->getHistorico($usuario->id_usuario);
+
         $query = $intervaloHistorico->select(
         ['numero_intervalo.*', 
         'usuario.usuario AS nome_usuario',
@@ -116,11 +124,12 @@ class App extends Controller
         ])
         ->join('usuario', 'numero_intervalo.id_usuario = usuario.id_usuario')
         ->join('unidade', 'usuario.id_unidade = unidade.id_unidade')
+        ->where("observacao","LIKE","%{$inputSearch}%")
+        ->where("unidade","LIKE","%$inputSearch%")
+        ->where("inicio","=","$inputSearch")
+        ->where("fim","=","$inputSearch")
         ->orderBy('id_numero_intervalo', 'DESC')
-        ->where("unidade","=","SEMDES GABINETE")
         ->get();
-
-        // var_dump($query);
 
         $html = $this->view->renderizar("listHistoryGeral", [
             "historicoGeral" => $query
