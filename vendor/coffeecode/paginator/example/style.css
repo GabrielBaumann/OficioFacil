@@ -22,16 +22,16 @@ body {
     display: inline-block;
     margin: 0 10px;
     padding: 4px 12px;
-    background: #A287E7;
+    background: #280583;
     color: #fff;
     text-decoration: none;
     -webkit-border-radius: 4px;
     -moz-border-radius: 4px;
-    border-radius: 4px;
+    border-radius: 30px;
 }
 
 .paginator_item:hover {
-    background: #8A6ED5;
+    background: #1d0269;
 }
 
 .paginator_active,

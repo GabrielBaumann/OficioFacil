@@ -75,7 +75,7 @@
 </div>
 
 <!-- Pagination -->
-<div class="bg-white px-4 py-3 flex items-center justify-between border-b border-r border-l border-gray-300 sm:px-6">
+<div class="px-4 py-3 flex items-center justify-between border-b border-r border-l border-gray-300 sm:px-6">
 
     <div class="hidden sm:flex-1 sm:flex sm:items-center sm:justify-between">
         <div>
