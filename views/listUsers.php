@@ -38,7 +38,7 @@
                             <div class="text-sm text-gray-900"><?= (new Unidade())->idUnidade($usuario->id_unidade)->unidade; ?></div>
                         </td>
                         <td data-label="Tipo de Acesso" class="px-6 py-4 whitespace-nowrap">
-                            <div class="color-user text-sm text-blue-800 bg-blue-200 rounded-full py-0.5"><?= $usuario->tipo_acesso; ?></div>
+                            <span class="color-user text-sm text-blue-800 bg-blue-200 rounded-full text-sm px-2.5 py-0.5"><?= $usuario->tipo_acesso; ?></span>
                         </td>
                         <td data-label="Status" class="px-6 py-4 whitespace-nowrap">
                             <span class="status-badge px-2.5 py-0.5 rounded-full text-xs font-medium bg-green-100 text-green-800">
