@@ -7,6 +7,7 @@
     <script src="https://cdn.tailwindcss.com"></script>
     <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
     <script src="https://unpkg.com/@heroicons/react@1.0.5/outline.js" crossorigin="anonymous"></script>
+    <link rel="stylesheet" href="<?= themes("/lib/css/paginator.css"); ?>">
     <style>
         @media (max-width: 640px) {
             .responsive-table thead {

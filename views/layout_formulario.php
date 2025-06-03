@@ -15,7 +15,7 @@
             <?php if($usuario->tipo_acesso === "dev"):?>
                 <a href="<?= url("/user")?>">
                     <button id="toggleView" class="bg-blue-900 rounded-full cursor-pointer py-1 px-3 md:flex items-center space-x-1 text-sm font-medium text-white transition">
-                        <span>Gerenciar Usuários</span>
+                      <span>Gerenciar Usuários</span>
                     </button>
                 </a>
               <?php endif;?>

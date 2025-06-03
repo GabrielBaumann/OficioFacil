@@ -224,6 +224,7 @@ class App extends Controller
                     ->offset($pager->offset())
                     ->order("nome")
                     ->fetch(true),
+                "totalUser" => (new Usuario())->find()->count(),
                 "paginator" => $pager->render()
             ]);  
 
@@ -278,6 +279,7 @@ class App extends Controller
                     ->offset($pager->offset())
                     ->order("usuario")
                     ->fetch(true),
+                "totalUser" => $usuario->count(),
                 "paginator" => $pager->render()
             ]);
 
@@ -299,6 +301,7 @@ class App extends Controller
                 ->offset($pager->offset())
                 ->order("nome")
                 ->fetch(true),
+            "totalUser" => (new Usuario())->find()->count(),
             "paginator" => $pager->render()
         ]);  
     }
