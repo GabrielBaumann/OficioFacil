@@ -1,13 +1,18 @@
 <?php
 
 // DATABASE
-define("CONF_DB_HOST", "localhost");
-define("CONF_DB_USER", "root");
-define("CONF_DB_PASS", "");
-define("CONF_DB_NAME", "db_office");
+// define("CONF_DB_HOST", "localhost");
+// define("CONF_DB_USER", "root");
+// define("CONF_DB_PASS", "");
+// define("CONF_DB_NAME", "db_office");
+
+define("CONF_DB_HOST", "162.241.62.236");
+define("CONF_DB_USER", "syscer62_office");
+define("CONF_DB_PASS", "19@@2025");
+define("CONF_DB_NAME", "syscer62_dbOffice");
 
 // URLs
-define("CONF_URL_BASE", "https://www.oficiofacil.com.br");
+define("CONF_URL_BASE", "https://oficiofacil.syscerberus.com");
 define("CONF_URL_TEST", "http://localhost/OficioFacil");
 
 

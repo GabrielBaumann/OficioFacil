@@ -3,6 +3,8 @@
 namespace Source\App;
 
 // use Source\Support\GerarPdf;
+
+use League\Plates\Template\Data;
 use Source\Models\NumeroIntervalo;
 use Source\Models\NumeroOficio;
 
@@ -16,11 +18,13 @@ use Source\Support\Pager;
 
 class App extends Controller
 {
+    private $user;
+
     public function __construct()
     {
         parent::__construct(__DIR__ . "/../../views/");
 
-        if (!Autenticar::usuarioLogado()) {
+        if (!$this->user = Autenticar::usuarioLogado()) {
             $this->message->warning("Efetue login para acessar!")->flash();
             redirect("/");
         }
@@ -103,19 +107,22 @@ class App extends Controller
 
     public function searchInteval(array $data) : void
     {
-        $inputSearch = null;
 
-        if(isset($data["search-general"]) && !empty($data["search-general"])) {
-            $inputSearch = filter_var(trim($data["search-general"]), FILTER_SANITIZE_SPECIAL_CHARS);
+        if(isset($data["search-general"])) {
+            $inputSearch = null;  
+            if(!empty($data["search-general"])) {
+                $inputSearch = filter_var(trim($data["search-general"]), FILTER_SANITIZE_SPECIAL_CHARS);
+            }  
         }
 
-        if(isset($data["search-unit"]) && !empty($data["search-unit"])) {
-            $inputSearch = filter_var(trim($data["search-unit"]), FILTER_SANITIZE_SPECIAL_CHARS);
+        if(isset($data["search-unit"])) {
+            $inputSearch = null;  
+            if (!empty($data["search-unit"])) {
+                $inputSearch = filter_var(trim($data["search-unit"]), FILTER_SANITIZE_SPECIAL_CHARS);
+            }
         }
-
-        $usuario = Autenticar::usuarioLogado();
+        
         $intervaloHistorico = (new NumeroIntervalo());
-        $intervaloHistorico->getHistorico($usuario->id_usuario);
 
         $query = $intervaloHistorico->select(
         ['numero_intervalo.*', 
@@ -131,9 +138,39 @@ class App extends Controller
         ->orderBy('id_numero_intervalo', 'DESC')
         ->get();
 
-        $html = $this->view->renderizar("listHistoryGeral", [
-            "historicoGeral" => $query
-        ]);
+        if (isset($data["search-general"])) {
+
+            $html = $this->view->renderizar("listHistoryGeral", [
+                "historicoGeral" => $query
+            ]);
+
+            if(!empty($data["search-general"])) {
+                    $html = $this->view->renderizar("listHistoryGeral", [
+                    "historicoGeral" => $query
+                ]);
+            }
+        }
+
+        if (isset($data["search-unit"])) {
+
+            $arrayFilter = array_filter($query, function ($inter) {
+                return $inter->id_usuario === $this->user->id_usuario;
+            });
+
+            $html = $this->view->renderizar("listHistoryUnidade", [
+                "historico" => $arrayFilter
+            ]);
+
+            if (!empty($data["search-unit"])) {
+                $arrayFilter = array_filter($query, function ($inter) {
+                    return $inter->id_usuario === $this->user->id_usuario;
+                });
+
+                $html = $this->view->renderizar("listHistoryUnidade", [
+                    "historico" => $arrayFilter
+                ]);
+            }
+        }
 
         $json["html"] = $html;
         echo json_encode($json);
