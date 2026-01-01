@@ -4,11 +4,8 @@ namespace Source\App;
 
 // use Source\Support\GerarPdf;
 
-<<<<<<< HEAD
 use DateTime;
-=======
 use League\Plates\Template\Data;
->>>>>>> fcc9ba4bf5de9098d179ca85ece56b00796f4af7
 use Source\Models\NumeroIntervalo;
 use Source\Models\NumeroOficio;
 
