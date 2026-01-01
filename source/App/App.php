@@ -3,6 +3,8 @@
 namespace Source\App;
 
 // use Source\Support\GerarPdf;
+
+use DateTime;
 use Source\Models\NumeroIntervalo;
 use Source\Models\NumeroOficio;
 
@@ -34,6 +36,18 @@ class App extends Controller
 
             $ultimoIntervalo = $intervalo->find()->order("id_numero_intervalo DESC")->fetch();
             $numeroIntervalor = ($ultimoIntervalo->fim ?? 0) + 1;
+            
+            // Atualização para reiniciação de número
+
+                $dateTime = new DateTime($ultimoIntervalo->data_cadastro);
+                $anoUltimo = (int)$dateTime->format("Y");
+                $anoAtual = (int)date("Y");          
+
+                if($anoUltimo != $anoAtual) {
+                    $numeroIntervalor = 1;
+                }            
+
+            // Fim da atualização
 
             $verificarNumero = $intervalo->verificarNumero($numeroIntervalor, $data['max-number'], $usuario->id_unidade);
 
@@ -113,6 +127,18 @@ class App extends Controller
         if ($local === "intervaloMais") {
             $intervalo = (new NumeroIntervalo());
             $ultimoIntervalo = $intervalo->find()->order("id_numero_intervalo DESC")->fetch();
+
+            // Atualização para reiniciação de número
+                
+                $dateTime = new DateTime($ultimoIntervalo->data_cadastro);
+                $anoUltimo = (int)$dateTime->format("Y");
+                $anoAtual = (int)date("Y");          
+
+                if($anoUltimo != $anoAtual) {
+                    $ultimoIntervalo = 1;
+                }
+
+            // Fim da atualização
 
             echo $this->view->renderizar("intervalo_mais", [
                 "intervalo" => $ultimoIntervalo
