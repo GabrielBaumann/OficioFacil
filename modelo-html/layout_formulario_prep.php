@@ -11,17 +11,20 @@
       <header class="absolute inset-x-0 top-0 z-50">
         <nav class="flex items-center justify-between p-6 lg:px-8" aria-label="Global">
           <div class="flex lg:flex-1">
-            <a href="#" class="cursor-default text-sm/6 font-semibold text-gray-900 mr-10">Olá, <?= $usuario->usuario ?><span class='hidden md:inline'> - <?=$unidade->unidade ?></span></span></a>
+            <a href="#" class="cursor-default text-sm/6 font-semibold text-gray-900 mr-10">Olá, Fulano</span></a>
             <?php if($usuario->tipo_acesso === "dev"):?>
                 <a href="<?= url("/user")?>">
-                    <button id="toggleView" class="bg-blue-900 rounded-full cursor-pointer py-1 px-3 md:flex items-center space-x-1 text-sm font-medium text-white transition">
-                      <span>Gerenciar Usuários</span>
+                    <button id="toggleView" class=" md:flex items-center space-x-1 text-sm font-medium text-gray-600 hover:text-blue-600 transition">
+                        <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 4.354a4 4 0 110 5.292M15 21H3v-1a6 6 0 0112 0v1zm0 0h6v-1a6 6 0 00-9-5.197M13 7a4 4 0 11-8 0 4 4 0 018 0z" />
+                        </svg>
+                        <span>Gerenciar Usuários</span>
                     </button>
                 </a>
               <?php endif;?>
           </div>
           
-          <div class="flex flex-1 justify-end z-1">
+          <div class="flex flex-1 justify-end">
             <a href="<?= url("/sair"); ?>" class="text-sm/6 font-semibold text-gray-900">Sair<span aria-hidden="true">&rarr;</span></a>
           </div>
         </nav>

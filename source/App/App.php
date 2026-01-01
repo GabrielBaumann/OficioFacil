@@ -4,7 +4,11 @@ namespace Source\App;
 
 // use Source\Support\GerarPdf;
 
+<<<<<<< HEAD
 use DateTime;
+=======
+use League\Plates\Template\Data;
+>>>>>>> fcc9ba4bf5de9098d179ca85ece56b00796f4af7
 use Source\Models\NumeroIntervalo;
 use Source\Models\NumeroOficio;
 
@@ -14,14 +18,17 @@ use Source\Models\Autenticar;
 use Source\Models\Unidade;
 use Source\Models\Usuario;
 use Source\Support\Message;
+use Source\Support\Pager;
 
 class App extends Controller
 {
+    private $user;
+
     public function __construct()
     {
         parent::__construct(__DIR__ . "/../../views/");
 
-        if (!Autenticar::usuarioLogado()) {
+        if (!$this->user = Autenticar::usuarioLogado()) {
             $this->message->warning("Efetue login para acessar!")->flash();
             redirect("/");
         }
@@ -33,6 +40,12 @@ class App extends Controller
         $usuario = Autenticar::usuarioLogado();
         $intervalo = (new NumeroIntervalo());
         if(!empty($data['csrf'])){
+
+            if(empty($data["max-number"])) {
+                $json["message"] = (new Message())->warning("O campo Número final é obrigatório!")->render();
+                echo json_encode($json);
+                return;
+            }
 
             $ultimoIntervalo = $intervalo->find()->order("id_numero_intervalo DESC")->fetch();
             $numeroIntervalor = ($ultimoIntervalo->fim ?? 0) + 1;
@@ -106,6 +119,78 @@ class App extends Controller
             "historicoGeral" => $query,
             "totGeral" => count((new NumeroIntervalo())->find()->fetch(true)),
         ]);
+    }
+
+    public function searchInteval(array $data) : void
+    {
+
+        if(isset($data["search-general"])) {
+            $inputSearch = null;  
+            if(!empty($data["search-general"])) {
+                $inputSearch = filter_var(trim($data["search-general"]), FILTER_SANITIZE_SPECIAL_CHARS);
+            }  
+        }
+
+        if(isset($data["search-unit"])) {
+            $inputSearch = null;  
+            if (!empty($data["search-unit"])) {
+                $inputSearch = filter_var(trim($data["search-unit"]), FILTER_SANITIZE_SPECIAL_CHARS);
+            }
+        }
+        
+        $intervaloHistorico = (new NumeroIntervalo());
+
+        $query = $intervaloHistorico->select(
+        ['numero_intervalo.*', 
+        'usuario.usuario AS nome_usuario',
+        'unidade.unidade AS nome_unidade'
+        ])
+        ->join('usuario', 'numero_intervalo.id_usuario = usuario.id_usuario')
+        ->join('unidade', 'usuario.id_unidade = unidade.id_unidade')
+        ->where("observacao","LIKE","%{$inputSearch}%")
+        ->where("unidade","LIKE","%$inputSearch%")
+        ->where("inicio","=","$inputSearch")
+        ->where("fim","=","$inputSearch")
+        ->orderBy('id_numero_intervalo', 'DESC')
+        ->get();
+
+        if (isset($data["search-general"])) {
+
+            $html = $this->view->renderizar("listHistoryGeral", [
+                "historicoGeral" => $query
+            ]);
+
+            if(!empty($data["search-general"])) {
+                    $html = $this->view->renderizar("listHistoryGeral", [
+                    "historicoGeral" => $query
+                ]);
+            }
+        }
+
+        if (isset($data["search-unit"])) {
+
+            $arrayFilter = array_filter($query, function ($inter) {
+                return $inter->id_usuario === $this->user->id_usuario;
+            });
+
+            $html = $this->view->renderizar("listHistoryUnidade", [
+                "historico" => $arrayFilter
+            ]);
+
+            if (!empty($data["search-unit"])) {
+                $arrayFilter = array_filter($query, function ($inter) {
+                    return $inter->id_usuario === $this->user->id_usuario;
+                });
+
+                $html = $this->view->renderizar("listHistoryUnidade", [
+                    "historico" => $arrayFilter
+                ]);
+            }
+        }
+
+        $json["html"] = $html;
+        echo json_encode($json);
+        return;
     }
 
     public function fechar() : void
@@ -198,11 +283,100 @@ class App extends Controller
 
     public function user(?array $data) : void
     {   
+        // Navegar entre as páginas
+        if(isset($data["page"]) && !empty($data["page"])) {
 
-        $usuario = (new Usuario())->find()->limit(10)->fetch(true);
+            $usuario = (new Usuario())->find();
+            $page = (!empty($data["page"]) && filter_var($data["page"], FILTER_VALIDATE_INT) >= 1 ? $data["page"] : 1);
+            $pager = new Pager(url("/user/p/"));
+            $pager->pager($usuario->count(), 8, $page);
+
+            $html = $this->view->renderizar("listUsers", [
+                "countUser" => $usuario->count(),
+                "usuarios" => $usuario
+                    ->limit($pager->limit())
+                    ->offset($pager->offset())
+                    ->order("nome")
+                    ->fetch(true),
+                "totalUser" => (new Usuario())->find()->count(),
+                "paginator" => $pager->render()
+            ]);  
+
+            $json["html"] = $html;
+            echo json_encode($json);
+            return;
+        }
+
+        // Pesquisar dados pelo input ou selects
+        
+        if(isset($data["input-search-name"]) || isset($data["select-search-status"]) || isset($data["select-search-type-access"])){
+
+            $search = isset($data["input-search-name"]) && $data["input-search-name"] ? trim(filter_var($data["input-search-name"], FILTER_SANITIZE_SPECIAL_CHARS)) : null;
+            $value = trim((string) isset($data["select-search-status"]));
+            $status = isset($data["select-search-status"]) && $value !== "" ? trim(filter_var($data["select-search-status"], FILTER_SANITIZE_SPECIAL_CHARS)) : null;
+            $typeAcess = isset($data["select-search-type-access"]) && $data["select-search-type-access"] ? trim(filter_var($data["select-search-type-access"], FILTER_SANITIZE_SPECIAL_CHARS)) : null;
+            
+            $search = $search === "*" ? null : $search;
+            $status = $status === "*" ? null : $status;
+            $typeAcess = $typeAcess === "*" ? null : $typeAcess;
+
+            // var_dump($search, $status, $typeAcess);
+
+            $conditions = [];
+            $params = [];
+
+            if(!empty($search)) {
+                $conditions[] = "usuario LIKE :u";
+                $params["u"] = "%{$search}%";
+            }
+
+            if(!is_null($status)) {
+                $conditions[] = "ativo = :a";
+                $params["a"] = $status;
+            }
+
+            if(!is_null($typeAcess)) {
+                $conditions[] = "tipo_acesso = :t";
+                $params["t"] = $typeAcess;
+            }
+
+            $where = implode(" AND ", $conditions);
+
+            $usuario = (new Usuario())->find($where, http_build_query($params));
+
+            $pager = new Pager(url("/user/p/"));
+            $pager->pager($usuario->count(), 8, 1);
+
+            $html = $this->view->renderizar("listUsers", [
+                "usuarios" => $usuario
+                    ->limit($pager->limit())
+                    ->offset($pager->offset())
+                    ->order("usuario")
+                    ->fetch(true),
+                "totalUser" => $usuario->count(),
+                "paginator" => $pager->render()
+            ]);
+
+            $json["html"] = $html;
+            echo json_encode($json);
+            return;
+        }
+
+
+
+        $usuario = (new Usuario())->find();
+        $pager = new Pager(url("/user/p/"));
+        $pager->pager($usuario->count(), 8, 1);
 
         echo $this->view->renderizar("usuario", [
+            "countUser" => $usuario->count(),
             "usuarios" => $usuario
+                ->limit($pager->limit())
+                ->offset($pager->offset())
+                ->order("nome")
+                ->fetch(true),
+            "totalUser" => (new Usuario())->find()->count(),
+            "paginator" => $pager->render()
         ]);  
     }
 
@@ -263,9 +437,8 @@ class App extends Controller
     }
 
     public function updateList() : void
-    {   
-        
-        $usuario = (new Usuario())->find()->limit(10)->fetch(true);
+    {          
+        $usuario = (new Usuario())->find()->limit(12)->fetch(true);
         echo $this->view->renderizar("list_usuario", [
             "usuarios" => $usuario
         ]);  

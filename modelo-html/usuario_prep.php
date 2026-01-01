@@ -1,0 +1,63 @@
+<?php
+use Source\Models\Unidade;
+$this->layout('layout_user', ['usuarios' => $usuarios]); ?>
+
+<div class="overflow-x-auto">
+    <table class="min-w-full responsive-table">
+        <thead class="bg-gray-50">
+            <tr>
+                <th scope="col" class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
+                    Nome
+                </th>
+                <th scope="col" class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
+                    Unidade
+                </th>
+                <th scope="col" class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
+                    Tipo de Acesso
+                </th>
+                <th scope="col" class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
+                    Status
+                </th>
+                <th scope="col" class="px-6 py-3 text-right text-xs font-medium text-gray-500 uppercase tracking-wider">
+                    Ação
+                </th>
+            </tr>
+        </thead>
+        <?php foreach($usuarios as $usuario): ?>
+            <tbody class="bg-white divide-y divide-gray-200">
+                <!-- Line -->
+                <tr class="hover:bg-gray-50" data-url="<?= url("/addUser/{$usuario->id_usuario}") ?>">
+                    <td data-label="Nome" class="px-6 py-4 whitespace-nowrap">
+                        <div class="flex items-center">
+                            <div class="ml-4">
+                                <div class="text-sm font-medium text-gray-900"><?= $usuario->usuario; ?></div>
+                            </div>
+                        </div>
+                    </td>
+                    <td data-label="Unidade" class="px-6 py-4 whitespace-nowrap">
+                        <div class="text-sm text-gray-900"><?= (new Unidade())->idUnidade($usuario->id_unidade)->unidade; ?></div>
+                    </td>
+                    <td data-label="Tipo de Acesso" class="px-6 py-4 whitespace-nowrap">
+                        <div class="text-sm text-gray-900"><?= $usuario->tipo_acesso; ?></div>
+                    </td>
+                    <td data-label="Status" class="px-6 py-4 whitespace-nowrap">
+                        <span class="status-badge px-2.5 py-0.5 rounded-full text-xs font-medium bg-green-100 text-green-800">
+                            <?= $usuario->ativo ? "ativo" : "cancelado" ; ?>
+                        </span>
+                    </td>
+                    <td data-label="Ação" class="px-6 py-4 whitespace-nowrap text-right text-sm font-medium">
+                        <div class="flex justify-end">
+                            <button class="text-blue-600 hover:text-blue-900 p-1 rounded-full hover:bg-blue-500">
+                                <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" viewBox="0 0 20 20" fill="currentColor">
+                                    <path d="M13.586 3.586a2 2 0 112.828 2.828l-.793.793-2.828-2.828.793-.793zM11.379 5.793L3 14.172V17h2.828l8.38-8.379-2.83-2.828z" />
+                                </svg>
+                            </button>
+                        </div>
+                    </td>
+                </tr>
+            </tbody>
+        <?php endforeach; ?>
+    </table>
+</div>
+
+            

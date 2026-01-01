@@ -84,7 +84,7 @@ abstract class Dispatch
      * @param array|null $data
      * @return string|null
      */
-    public function route(string $name, array $data = null): ?string
+    public function route(string $name, ?array $data = null): ?string
     {
         foreach ($this->routes as $http_verb) {
             foreach ($http_verb as $route_item) {
@@ -110,7 +110,7 @@ abstract class Dispatch
      * @param null|string $group
      * @return Dispatch
      */
-    public function group(?string $group, array|string $middleware = null): Dispatch
+    public function group(?string $group, array|string|null $middleware = null): Dispatch
     {
         $this->group = ($group ? trim($group, "/") : null);
         $this->middleware = $middleware ? [$this->group => $middleware] : null;
@@ -152,7 +152,7 @@ abstract class Dispatch
      * @param string $route
      * @param array|null $data
      */
-    public function redirect(string $route, array $data = null): void
+    public function redirect(string $route, ?array $data = null): void
     {
         if ($name = $this->route($route, $data)) {
             header("Location: {$name}");
